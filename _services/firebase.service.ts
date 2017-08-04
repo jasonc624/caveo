@@ -8,8 +8,8 @@ export class FirebaseService {
 
   constructor(private af: AngularFireDatabase, public afAuth: AngularFireAuth) { }
 
-  getListings() {
-    this.listings = this.af.list('/listings') as FirebaseListObservable<Listing[]>
+  getListings(address) {
+    this.listings = this.af.list(`/listings/${address}`) as FirebaseListObservable<Listing[]>;
     return this.listings;
   }
 
