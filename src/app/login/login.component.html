@@ -1,0 +1,16 @@
+<form action="submit">
+  <div class="form-group">
+    <label for="name">Enter valid email</label>
+    <input type="text" class="form-control" id="username"
+           required
+           [(ngModel)]="username" name="username">
+
+    <label for="city">Enter password</label>
+    <input type="text" class="form-control" id="city"
+           required
+           [(ngModel)]="password" name="name">
+  </div>
+  <button type="button" (click)="login()">Login</button>
+  <button type="button" (click)="logout()">Logout</button>
+  <button type="button" (click)="register()">Register</button>
+</form>
