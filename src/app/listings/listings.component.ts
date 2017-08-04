@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FirebaseService} from '../_services/firebase.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-listings',
@@ -8,10 +9,11 @@ import {FirebaseService} from '../_services/firebase.service';
 })
 export class ListingsComponent implements OnInit {
   listings:any;
-  constructor(public firebaseService: FirebaseService) { }
+  constructor(public firebaseService: FirebaseService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.firebaseService.getListings().subscribe(res => {
+    const address = this.route.snapshot.params['address'];
+    this.firebaseService.getListings(address).subscribe(res => {
       console.log('getListings', res);
       this.listings = res;
     })

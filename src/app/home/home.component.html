@@ -1,3 +1,28 @@
 <div id="home-page" class="container-fluid page-container">
-  <h1>Home</h1>
+  <h1>Search</h1>
+  <form action="submit">
+    <div class="form-group">
+      <label for="name">Search Address</label>
+      <input type="text" class="form-control" id="address"
+             required
+             [(ngModel)]="address" name="name">
+
+      <label for="city">City</label>
+      <input type="text" class="form-control" id="address"
+             required
+             [(ngModel)]="city" name="name">
+
+      <label for="state">State</label>
+      <select name="state" id="state" class="form-control"
+              [(ngModel)]="state">
+        <option value="FL">FL</option>
+      </select>
+
+      <label for="zip">Zip</label>
+      <input type="text" class="form-control" id="address"
+             required
+             [(ngModel)]="zip" name="name">
+    </div>
+    <button type="submit" (click)="searchAddress(address,city,state,zip)">submit</button>
+  </form>
 </div>

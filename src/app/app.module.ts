@@ -16,7 +16,7 @@ import { ListingsComponent } from './listings/listings.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
-  {path:'listings', component: ListingsComponent}
+  {path:'listings/:address', component: ListingsComponent}
 ];
 @NgModule({
   declarations: [
