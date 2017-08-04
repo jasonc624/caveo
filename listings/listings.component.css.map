@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,QAAQ;EACN,MAAM,EAAE,cAAc;EACtB,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,IAAI;EACX,aAAa,EAAE,IAAI",
+"sources": ["listings.component.sass"],
+"names": [],
+"file": "listings.component.css"
+}
