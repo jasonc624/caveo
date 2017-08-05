@@ -3,6 +3,6 @@
   <router-outlet></router-outlet>
 </div>
 
-<app-modal *ngIf="showModal !== 'closed'"></app-modal>
+<app-modal *ngIf="showModal !== 'closed'" [purpose]="showModal"></app-modal>
 
 

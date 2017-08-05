@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ModalService} from "../../_services/modal.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {ModalService} from '../../_services/modal.service';
 
 @Component({
   selector: 'app-modal',
@@ -7,14 +7,13 @@ import {ModalService} from "../../_services/modal.service";
   styleUrls: ['./modal.component.sass']
 })
 export class ModalComponent implements OnInit {
-  modalContent;
+  @Input() purpose;
   constructor(public modalService: ModalService) {
-    this.modalService.modalStatus.subscribe(res => {
-      this.modalContent = res;
-    });
   }
 
   ngOnInit() {
   }
-
+  closeModal() {
+     this.modalService.setStatus('closed');
+  }
 }

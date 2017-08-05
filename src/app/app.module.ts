@@ -19,6 +19,7 @@ import {ListingsComponent} from './listings/listings.component';
 import {LoginComponent} from './login/login.component';
 import {ListingNotFoundComponent} from './listings/listing-not-found/listing-not-found.component';
 import {ModalService} from './_services/modal.service';
+import {LoginModule} from "./login/login.module";
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -38,10 +39,10 @@ const appRoutes: Routes = [
     AppComponent,
     SplashComponent,
     HomeComponent,
-    LoginComponent,
     ListingsComponent,
     ListingNotFoundComponent,
   ],
+  exports: [LoginComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
@@ -50,10 +51,10 @@ const appRoutes: Routes = [
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule,
-    LayoutModule
+    LayoutModule,
+    LoginModule
   ],
   providers: [FirebaseService, ModalService],
-  bootstrap: [AppComponent],
-  exports: [LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

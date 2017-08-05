@@ -30,8 +30,7 @@ export class NavigationComponent implements OnInit {
   }
 
   openUserModal(selected) {
-    console.log('selected', selected);
-    // this.purpose.emit(selected);
+    console.log('openUserModal', selected);
     this.modalService.setStatus(selected);
   }
   logout() {

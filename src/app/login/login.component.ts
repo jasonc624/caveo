@@ -4,6 +4,8 @@ import {AngularFireAuth} from "angularfire2/auth";
 import {Observable} from "rxjs/Observable";
 import * as firebase from 'firebase/app';
 import {Router} from "@angular/router";
+import {ModalComponent} from "../layout/modal/modal.component";
+import {ModalService} from "../_services/modal.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,20 +14,24 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
   user: Observable<firebase.User>;
 
-  username;
+  email;
   password;
-  constructor(db: AngularFireDatabase,public afAuth: AngularFireAuth, private router: Router) {
+  constructor(private modalService: ModalService,
+              public afAuth: AngularFireAuth,
+              private router: Router) {
     this.user = afAuth.authState;
   }
 
   ngOnInit() {
   }
   login() {
-    console.log('login creds', this.username, this.password);
-    this.afAuth.auth.signInWithEmailAndPassword(this.username,this.password)
+    console.log('login creds', this.email, this.password);
+    this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password)
       .then(res => {
         console.log('success you logged in!', res);
+        this.modalService.setStatus('closed');
         this.router.navigate(['']);
+        console.log('authstate after logging in', this.user);
       })
       .catch(err => console.log('you fucked up buddy', err));
   }
@@ -37,9 +43,9 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    console.log('reg', this.username, this.password);
-    this.afAuth.auth.createUserWithEmailAndPassword(this.username, this.password)
-      .then(res => console.log('success you registered',res))
+    console.log('reg', this.email, this.password);
+    this.afAuth.auth.createUserWithEmailAndPassword(this.email, this.password)
+      .then(res => console.log('success you registered', res))
       .catch(err => console.log('something went wrong while registering', err) );
   }
 }
