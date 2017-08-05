@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {ModalService} from "../../_services/modal.service";
 
 @Component({
   selector: 'app-navigation',
@@ -8,7 +10,8 @@ import {NavigationEnd, Router} from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
   isLanding = false;
-  constructor(public router: Router) { }
+  @Output() purpose: EventEmitter<string> = new EventEmitter<string>();
+  constructor(public router: Router, private afAuth: AngularFireAuth, private modalService: ModalService) { }
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -19,8 +22,24 @@ export class NavigationComponent implements OnInit {
         } else {
           this.isLanding = false;
         }
+        this.afAuth.authState.subscribe(res => {
+          console.log('auth state is', res);
+        });
       }
     });
   }
 
+  openUserModal(selected) {
+    console.log('selected', selected);
+    // this.purpose.emit(selected);
+    this.modalService.setStatus(selected);
+  }
+  logout() {
+    this.afAuth.auth.signOut()
+      .then(res => {
+        console.log('signed out', res);
+        this.router.navigate(['landing']);
+      })
+      .catch(err => console.log('something went wrong', err));
+  }
 }

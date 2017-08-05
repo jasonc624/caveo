@@ -1,4 +1,8 @@
-<app-navigation></app-navigation>
+<app-navigation (purpose)="modalPurp                                                                                                                                                                                                                                                                            sose($event, content)"></app-navigation>
 <div class="page-container" [ngClass]="{'splash-page': isLanding}">
   <router-outlet></router-outlet>
 </div>
+
+<app-modal *ngIf="showModal !== 'closed'"></app-modal>
+
+

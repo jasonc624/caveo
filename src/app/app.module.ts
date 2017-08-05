@@ -5,9 +5,12 @@ import {AppComponent} from './app.component';
 import {SplashComponent} from './splash/splash.component';
 import {LayoutModule} from './layout/layout.module';
 import {environment} from '../environments/environment';
+
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './home/home.component';
 import {FirebaseService} from './_services/firebase.service';
@@ -15,11 +18,12 @@ import {RouterModule, Routes} from '@angular/router';
 import {ListingsComponent} from './listings/listings.component';
 import {LoginComponent} from './login/login.component';
 import {ListingNotFoundComponent} from './listings/listing-not-found/listing-not-found.component';
+import {ModalService} from './_services/modal.service';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'landing', component: SplashComponent},
-  {path: 'login', component: LoginComponent},
+  // {path: 'login', component: LoginComponent},
   {
     path: 'listings', children: [
     {path: ':address', component: ListingsComponent},
@@ -34,20 +38,22 @@ const appRoutes: Routes = [
     AppComponent,
     SplashComponent,
     HomeComponent,
-    ListingsComponent,
     LoginComponent,
-    ListingNotFoundComponent
+    ListingsComponent,
+    ListingNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
+    NgbModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule,
     LayoutModule
   ],
-  providers: [FirebaseService],
+  providers: [FirebaseService, ModalService],
   bootstrap: [AppComponent],
+  exports: [LoginComponent]
 })
 export class AppModule { }
