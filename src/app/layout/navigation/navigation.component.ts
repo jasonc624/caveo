@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -6,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation.component.sass']
 })
 export class NavigationComponent implements OnInit {
-
-  constructor() { }
+  isLanding = false;
+  constructor(public router: Router) { }
 
   ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const route = event.url.slice(1);
+        if (route === 'landing') {
+          this.isLanding = true;
+        } else {
+          this.isLanding = false;
+        }
+      }
+    });
   }
 
 }

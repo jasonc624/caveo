@@ -18,6 +18,7 @@ import {ListingNotFoundComponent} from './listings/listing-not-found/listing-not
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'landing', component: SplashComponent},
   {path: 'login', component: LoginComponent},
   {
     path: 'listings', children: [

@@ -1,4 +1,4 @@
 <app-navigation></app-navigation>
-<div class="page-container">
+<div class="page-container" [ngClass]="{'splash-page': isLanding}">
   <router-outlet></router-outlet>
 </div>
