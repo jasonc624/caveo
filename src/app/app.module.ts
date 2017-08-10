@@ -1,3 +1,4 @@
+///<reference path="../../node_modules/ng-gapi/lib/GoogleApiService.d.ts"/>
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
@@ -20,6 +21,16 @@ import {LoginComponent} from './login/login.component';
 import {ListingNotFoundComponent} from './listings/listing-not-found/listing-not-found.component';
 import {ModalService} from './_services/modal.service';
 import {LoginModule} from "./login/login.module";
+import {ClientConfig, GoogleApiModule, NG_GAPI_CONFIG} from 'ng-gapi';
+
+const gapiClientConfig: ClientConfig = {
+  clientId: 'CLIENT_ID',
+  discoveryDocs: ['https://analyticsreporting.googleapis.com/$discovery/rest?version=v4'],
+  scope: [
+    'https://www.googleapis.com/auth/analytics.readonly',
+    'https://www.googleapis.com/auth/analytics'
+  ].join(' ')
+};
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -47,6 +58,10 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     NgbModule.forRoot(),
+    GoogleApiModule.forRoot({
+      provide: NG_GAPI_CONFIG,
+      useValue: gapiClientConfig
+    }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features

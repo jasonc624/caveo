@@ -12,5 +12,8 @@ export const environment = {
     projectId: 'caveo-41efd',
     storageBucket: 'caveo-41efd.appspot.com',
     messagingSenderId: '1058079604439'
+  },
+  googlePlaces: {
+    apiKey: 'AIzaSyBM7nKTGwZZZwY0WFXTxDTtQ-BbSte02bc'
   }
 };
