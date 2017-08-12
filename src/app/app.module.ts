@@ -25,8 +25,8 @@ import {ClientConfig, GoogleApiModule, NG_GAPI_CONFIG} from 'ng-gapi';
 import {PropertySearchModule} from './property-search/property-search.module';
 
 const gapiClientConfig: ClientConfig = {
-  clientId: 'CLIENT_ID',
-  discoveryDocs: ['https://analyticsreporting.googleapis.com/$discovery/rest?version=v4'],
+  clientId: '941829844092-ghp1t66vliq59k869m16d6hlasepbl5f.apps.googleusercontent.com',
+  discoveryDocs: ['https://maps.googleapis.com/maps/api/js?key=AIzaSyAbNq1iFLnZLkUZU5WFGRb-PXR_s9Ssjyo&libraries=places'],
   scope: [
     'https://www.googleapis.com/auth/analytics.readonly',
     'https://www.googleapis.com/auth/analytics'

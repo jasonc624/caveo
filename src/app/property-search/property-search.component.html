@@ -1,3 +1,18 @@
-<p>
-  property-search works!
-</p>
+<form action="submit">
+  <div class="form-group">
+    <input type="text" class="form-control" id="address"
+           required
+           [(ngModel)]="address" placeholder="Address (e.g. 123 East St)" name="name"><!--
+    --><input type="text" class="form-control" id="city"
+              required
+              [(ngModel)]="city" placeholder="City (e.g. NY)" name="city"><!--
+--><select name="state" id="state" class="form-control"
+           [(ngModel)]="state">
+    <option value="FL">FL</option>
+  </select><!--
+    --><input type="text" class="form-control" id="zip"
+              required
+              [(ngModel)]="zip" placeholder="Zip (e.g. 12345)" name="name">
+    <button type="button" id="submit" (click)="searchAddress(address,city,state,zip)">submit</button>
+  </div>
+</form>
