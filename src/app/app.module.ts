@@ -20,8 +20,9 @@ import {ListingsComponent} from './listings/listings.component';
 import {LoginComponent} from './login/login.component';
 import {ListingNotFoundComponent} from './listings/listing-not-found/listing-not-found.component';
 import {ModalService} from './_services/modal.service';
-import {LoginModule} from "./login/login.module";
+import {LoginModule} from './login/login.module';
 import {ClientConfig, GoogleApiModule, NG_GAPI_CONFIG} from 'ng-gapi';
+import {PropertySearchModule} from './property-search/property-search.module';
 
 const gapiClientConfig: ClientConfig = {
   clientId: 'CLIENT_ID',
@@ -67,7 +68,8 @@ const appRoutes: Routes = [
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule,
     LayoutModule,
-    LoginModule
+    LoginModule,
+    PropertySearchModule
   ],
   providers: [FirebaseService, ModalService],
   bootstrap: [AppComponent]
