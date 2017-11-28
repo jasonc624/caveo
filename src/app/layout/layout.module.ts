@@ -5,7 +5,8 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { LoginModule } from '../login/login.module';
-import {PropertySearchModule} from '../property-search/property-search.module';
+import { PropertySearchModule } from '../property-search/property-search.module';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import {PropertySearchModule} from '../property-search/property-search.module';
     RouterModule,
     LoginModule,
     PropertySearchModule,
+    NgbModule
   ],
   declarations: [NavigationComponent, FooterComponent, ModalComponent],
   exports: [NavigationComponent, FooterComponent, ModalComponent]

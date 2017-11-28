@@ -4,7 +4,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {ModalService} from "../../_services/modal.service";
 
 @Component({
-  selector: 'app-navigation',
+  selector: 'ng-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.sass']
 })

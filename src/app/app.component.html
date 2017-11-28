@@ -1,8 +1,8 @@
-<app-navigation (purpose)="modalPurpose($event, content)"></app-navigation>
+<ng-navigation (purpose)="modalPurpose($event, content)"></ng-navigation>
 <div class="page-container" [ngClass]="{'splash-page': isLanding}">
   <router-outlet></router-outlet>
 </div>
 
-<app-modal *ngIf="showModal !== 'closed'" [purpose]="showModal"></app-modal>
+<ng-modal *ngIf="showModal !== 'closed'" [purpose]="showModal"></ng-modal>
 
 

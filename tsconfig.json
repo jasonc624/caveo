@@ -17,9 +17,9 @@
     "lib": [
       "es2016",
       "dom"
-    ],
-    "files": [
-      "node_modules/angularfire2/firebase3.d.ts"
     ]
+//    "files": [
+//      "node_modules/angularfire2/firebase3.d.ts"
+//    ]
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-property-search',
+  selector: 'ng-property-search',
   templateUrl: './property-search.component.html',
   styleUrls: ['./property-search.component.sass']
 })

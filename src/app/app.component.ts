@@ -27,7 +27,7 @@ export class AppComponent {
     });
   }
 
-  modalPurpose(event, content) {
+  modalPurpose(event, content?) {
     this.showModal = event;
   }
 }
