@@ -25,6 +25,7 @@ import { SearchComponent } from './search/search.component';
 import { RegisterComponent } from './register/register.component';
 import {RegisterModule} from "./register/register.module";
 import {AuthService} from "./_services/auth.service";
+import {HttpClientModule} from "@angular/common/http";
 
 const gapiClientConfig: ClientConfig = {
   clientId: '941829844092-ghp1t66vliq59k869m16d6hlasepbl5f.apps.googleusercontent.com',
@@ -59,6 +60,7 @@ const appRoutes: Routes = [
   ],
   exports: [LoginComponent, RegisterComponent],
   imports: [
+    HttpClientModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     NgbModule.forRoot(),

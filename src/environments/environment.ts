@@ -13,7 +13,10 @@ export const environment = {
     storageBucket: 'caveo-41efd.appspot.com',
     messagingSenderId: '1058079604439'
   },
-  googlePlaces: {
-    apiKey: 'AIzaSyBM7nKTGwZZZwY0WFXTxDTtQ-BbSte02bc'
+  node: {
+    //Dev//
+    // url: 'http://localhost:5001/caveo-41efd/us-central1/'
+    //Prod//
+    url: 'https://us-central1-caveo-41efd.cloudfunctions.net/'
   }
 };
