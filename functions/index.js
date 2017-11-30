@@ -15,3 +15,5 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 exports.fuckoff = functions.https.onRequest((request, response) => {
   response.send("Fuckooff firebase!")
 })
+
+const placesApiKey = 'AIzaSyAg5fbmKi4vfVuDQwOwU-sF1KjTFXfrQC8';

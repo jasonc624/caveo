@@ -7,12 +7,14 @@ import { ModalComponent } from './modal/modal.component';
 import { LoginModule } from '../login/login.module';
 import { PropertySearchModule } from '../property-search/property-search.module';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {RegisterModule} from "../register/register.module";
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     LoginModule,
+    RegisterModule,
     PropertySearchModule,
     NgbModule
   ],

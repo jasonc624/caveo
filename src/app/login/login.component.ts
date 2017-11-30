@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import * as firebase from 'firebase/app';
 import {Router} from "@angular/router";
 import {ModalService} from "../_services/modal.service";
+import {AuthService} from "../_services/auth.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   email;
   password;
   constructor(private modalService: ModalService,
+              private auth: AuthService,
               public afAuth: AngularFireAuth,
               private router: Router) {
     this.user = afAuth.authState;
@@ -22,22 +24,18 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
+  fbLogin() {
+    this.auth.facebookLogin();
+  }
   login() {
     console.log('login creds', this.email, this.password);
-    this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password)
-      .then(res => {
-        console.log('success you logged in!', res);
-        this.modalService.setStatus('closed');
-        this.router.navigate(['']);
-        console.log('authstate after logging in', this.user);
-      })
-      .catch(err => console.log('you fucked up buddy', err));
+    this.auth.login(this.email, this.password);
+    this.modalService.setStatus('closed');
+    this.router.navigate(['']);
   }
 
   logout() {
-    this.afAuth.auth.signOut()
-      .then(res => console.log('you successfully signed out', res))
-      .catch(err => console.log('something went wrong', err));
+    this.auth.logout();
   }
 
   register() {

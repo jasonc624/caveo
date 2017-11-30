@@ -21,6 +21,10 @@ import {ModalService} from './_services/modal.service';
 import {LoginModule} from './login/login.module';
 import {ClientConfig, GoogleApiModule, NG_GAPI_CONFIG} from 'ng-gapi';
 import {PropertySearchModule} from './property-search/property-search.module';
+import { SearchComponent } from './search/search.component';
+import { RegisterComponent } from './register/register.component';
+import {RegisterModule} from "./register/register.module";
+import {AuthService} from "./_services/auth.service";
 
 const gapiClientConfig: ClientConfig = {
   clientId: '941829844092-ghp1t66vliq59k869m16d6hlasepbl5f.apps.googleusercontent.com',
@@ -51,8 +55,9 @@ const appRoutes: Routes = [
     HomeComponent,
     ListingsComponent,
     ListingNotFoundComponent,
+    SearchComponent
   ],
-  exports: [LoginComponent],
+  exports: [LoginComponent, RegisterComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
@@ -61,15 +66,16 @@ const appRoutes: Routes = [
       provide: NG_GAPI_CONFIG,
       useValue: gapiClientConfig
     }),
-    AngularFireModule.initializeApp(environment.firebase, 'caveo'),
+    AngularFireModule.initializeApp(environment.firebase, 'caveo-app'),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule,
     LayoutModule,
     LoginModule,
+    RegisterModule,
     PropertySearchModule
   ],
-  providers: [ModalService],
+  providers: [ModalService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

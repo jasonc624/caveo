@@ -1,10 +1,38 @@
-<nav class="navbar navbar-expand-md fixed-top" [ngClass]="{'splash-page': isLanding}">
-  <a class="navbar-brand" [routerLink]="['/']">Caveo</a>
-  <ul class="nav navbar-nav navbar-right">
-    <ng-container *ngIf="!afAuth.auth.currentUser">
-      <li><a (click)="openUserModal('login')">Login</a></li>
-      <li><a (click)="openUserModal('register')">Register</a></li>
-    </ng-container>
-    <li *ngIf="afAuth.auth.currentUser"><a (click)="logout()">Logout</a></li>
-  </ul>
+<nav *ngIf="isLanding" class="navbar navbar-default navbar-fixed-top" [ngClass]="{'splash-page': isLanding}">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="['/']">CAVEO</a>
+    <ul class="nav navbar-nav navbar-right">
+      <ng-container *ngIf="!auth.currentUser">
+        <li><a (click)="openUserModal('login')">Login</a></li>
+        <li><a (click)="openUserModal('register')">Register</a></li>
+      </ng-container>
+      <li *ngIf="auth.currentUser"><a (click)="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<nav class="sidebar" *ngIf="!isLanding" >
+  <div class="container-inner clearfix">
+    <div class="navbar-brand">
+      CAVEO
+    </div>
+    <div class="pull-right">
+      <div class="navbar-brand">
+        <i class="fa fa-icon fa-power-off" (click)="logout()"></i>
+      </div>
+    </div>
+    <div class="user-info text-center">
+      <div class="avatar"></div>
+      <div class="user-name">Jason Cardenas</div>
+      <div class="rating"></div>
+      <div class="revenue"></div>
+    </div>
+    <ul class="pull-left nav-links">
+      <li><a href="">Inbox</a></li>
+      <li><a href="">Favorites</a></li>
+      <li><a href="">Seller Dashboard</a></li>
+      <li><a href="">Profile</a></li>
+      <li><a href="">Help</a></li>
+    </ul>
+  </div>
 </nav>

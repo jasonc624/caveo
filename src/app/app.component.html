@@ -1,5 +1,6 @@
-<ng-navigation (purpose)="modalPurpose($event, content)"></ng-navigation>
-<div class="page-container" [ngClass]="{'splash-page': isLanding}">
+<ng-navigation (purpose)="modalPurpose($event, content)" [ngClass]="{'row col-sm-2': !isLanding }"></ng-navigation>
+<app-search *ngIf="!isLanding" class="row col-sm-10"></app-search>
+<div class="page-container" [ngClass]="{'splash-page': isLanding, 'col-sm-10': !isLanding}">
   <router-outlet></router-outlet>
 </div>
 

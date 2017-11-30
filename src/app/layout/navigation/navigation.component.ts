@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {ModalService} from "../../_services/modal.service";
+import {AuthService} from "../../_services/auth.service";
 
 @Component({
   selector: 'ng-navigation',
@@ -11,7 +12,7 @@ import {ModalService} from "../../_services/modal.service";
 export class NavigationComponent implements OnInit {
   isLanding = false;
   @Output() purpose: EventEmitter<string> = new EventEmitter<string>();
-  constructor(public router: Router, private afAuth: AngularFireAuth, private modalService: ModalService) { }
+  constructor(public router: Router, public auth: AuthService, private modalService: ModalService) { }
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -22,9 +23,6 @@ export class NavigationComponent implements OnInit {
         } else {
           this.isLanding = false;
         }
-        this.afAuth.authState.subscribe(res => {
-          console.log('auth state is', res);
-        });
       }
     });
   }
@@ -34,11 +32,7 @@ export class NavigationComponent implements OnInit {
     this.modalService.setStatus(selected);
   }
   logout() {
-    this.afAuth.auth.signOut()
-      .then(res => {
-        console.log('signed out', res);
-        this.router.navigate(['landing']);
-      })
-      .catch(err => console.log('something went wrong', err));
+    this.auth.logout();
+    this.router.navigate(['landing']);
   }
 }
