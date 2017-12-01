@@ -1,0 +1,10 @@
+<div class="search-container">
+  <input type="text" (click)="filters()" (ngModelChange)="queryAddresses($event)" [ngModel]="searchVal" class="search-bar">
+  <ng-container *ngIf="addrMatch">
+    <ul class="suggestions">
+      <li *ngFor="let match of addrMatch">
+        {{match.formatted_address}}
+      </li>
+    </ul>
+  </ng-container>
+</div>

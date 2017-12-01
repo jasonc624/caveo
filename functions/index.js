@@ -11,15 +11,10 @@ const placesApiKey = 'AIzaSyAbNq1iFLnZLkUZU5WFGRb-PXR_s9Ssjyo';
 admin.initializeApp(functions.config().firebase);
 // Add headers
 
-
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!")
-});
 exports.places = functions.https.onRequest((request, response) => {
   // response.header('Content-Type','application/json');
   response.header('Access-Control-Allow-Origin', '*');
   // response.header('Access-Control-Allow-Headers', 'Content-Type');
-  console.log('whats the request?', request.query.address);
   const url = api + '?query=' + request.query.address + '&key=' + placesApiKey;
   let body = '';
   https.get(url, res => {
@@ -27,7 +22,6 @@ exports.places = functions.https.onRequest((request, response) => {
       body += chunk;
     });
     res.on("end", () => {
-      console.log('whats this body', body);
       body = JSON.parse(body);
       response.send(body);
     });

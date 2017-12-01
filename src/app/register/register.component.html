@@ -1,0 +1,48 @@
+<form>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="validationServer01">Display name</label>
+      <input type="text" class="form-control is-valid" id="validationServer01" placeholder="Display name"
+             [(ngModel)]="user.display_name" required="" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationServer02">Full name</label>
+      <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Full name"
+             [(ngModel)]="user.full_name" required="" [ngModelOptions]="{standalone: true}">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="validationServer03">City</label>
+      <input type="text" class="form-control" id="validationServer03" placeholder="City" [(ngModel)]="user.city"
+             required="" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationServer04">State</label>
+      <input type="text" class="form-control" id="validationServer04" placeholder="State" [(ngModel)]="user.state"
+             required="" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationServer05">Zip</label>
+      <input type="text" class="form-control" id="validationServer05" placeholder="Zip" [(ngModel)]="user.zip"
+             required="" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationServer05">Phone</label>
+      <input type="text" class="form-control" id="" placeholder="Phone (xxx)xxx-xxxx" [(ngModel)]="user.phone"
+             required="" [ngModelOptions]="{standalone: true}">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="validationServer01">Email</label>
+      <input type="text" class="form-control" [(ngModel)]="user.email" placeholder="Email" required="" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationServer02">Password</label>
+      <input type="text" class="form-control" [(ngModel)]="user.password" placeholder="Password" required="" [ngModelOptions]="{standalone: true}">
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary" (click)="register(user)">Register</button>
+</form>

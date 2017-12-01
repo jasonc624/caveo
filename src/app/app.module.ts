@@ -26,6 +26,8 @@ import { RegisterComponent } from './register/register.component';
 import {RegisterModule} from "./register/register.module";
 import {AuthService} from "./_services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
+import {AuthGuard} from "./_guards/auth.guard";
+import {AppRoutingModule} from "./app-routing.module";
 
 const gapiClientConfig: ClientConfig = {
   clientId: '941829844092-ghp1t66vliq59k869m16d6hlasepbl5f.apps.googleusercontent.com',
@@ -36,18 +38,6 @@ const gapiClientConfig: ClientConfig = {
   ].join(' ')
 };
 
-const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'landing', component: SplashComponent},
-  // {path: 'login', component: LoginComponent},
-  {
-    path: 'listings', children: [
-    {path: ':address', component: ListingsComponent},
-    {path: ':address/not-found', component: ListingNotFoundComponent},
-  ]
-  },
-  {path: '**', redirectTo: ''}
-];
 
 @NgModule({
   declarations: [
@@ -62,7 +52,7 @@ const appRoutes: Routes = [
   imports: [
     HttpClientModule,
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
     NgbModule.forRoot(),
     GoogleApiModule.forRoot({
       provide: NG_GAPI_CONFIG,
@@ -77,7 +67,7 @@ const appRoutes: Routes = [
     RegisterModule,
     PropertySearchModule
   ],
-  providers: [ModalService, AuthService],
+  providers: [ModalService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
