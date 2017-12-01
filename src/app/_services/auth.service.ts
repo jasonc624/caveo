@@ -20,6 +20,7 @@ export class AuthService {
   isLoggedIn;
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+    this.currentUser = afAuth.auth.currentUser;
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
     firebase.auth().onAuthStateChanged(

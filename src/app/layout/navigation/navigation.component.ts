@@ -31,6 +31,7 @@ export class NavigationComponent implements OnInit {
     console.log('openUserModal', selected);
     this.modalService.setStatus(selected);
   }
+
   logout() {
     this.auth.logout();
     this.router.navigate(['landing']);
