@@ -24,14 +24,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-  fbLogin() {
-    this.auth.facebookLogin();
-  }
   login() {
     console.log('login creds', this.email, this.password);
     this.auth.login(this.email, this.password);
     this.modalService.setStatus('closed');
-    this.router.navigate(['']);
   }
 
   logout() {

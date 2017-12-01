@@ -5,15 +5,10 @@ import {ListingsComponent} from "./listings/listings.component";
 import {ListingNotFoundComponent} from "./listings/listing-not-found/listing-not-found.component";
 import {SplashComponent} from "./splash/splash.component";
 import {HomeComponent} from "./home/home.component";
+import {AuthGuard} from "./_guards/auth.guard";
 
-@NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: []
-})
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: HomeComponent, canActivate:[AuthGuard]},
   {path: 'landing', component: SplashComponent},
   // {path: 'login', component: LoginComponent},
   {
