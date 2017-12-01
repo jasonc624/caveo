@@ -13,13 +13,11 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 
 import {FormsModule} from '@angular/forms';
 import {HomeComponent} from './home/home.component';
-import {RouterModule, Routes} from '@angular/router'
 import {ListingsComponent} from './listings/listings.component';
 import {LoginComponent} from './login/login.component';
 import {ListingNotFoundComponent} from './listings/listing-not-found/listing-not-found.component';
 import {ModalService} from './_services/modal.service';
 import {LoginModule} from './login/login.module';
-import {ClientConfig, GoogleApiModule, NG_GAPI_CONFIG} from 'ng-gapi';
 import {PropertySearchModule} from './property-search/property-search.module';
 import { SearchComponent } from './search/search.component';
 import { RegisterComponent } from './register/register.component';
@@ -28,15 +26,6 @@ import {AuthService} from "./_services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuard} from "./_guards/auth.guard";
 import {AppRoutingModule} from "./app-routing.module";
-
-const gapiClientConfig: ClientConfig = {
-  clientId: '941829844092-ghp1t66vliq59k869m16d6hlasepbl5f.apps.googleusercontent.com',
-  discoveryDocs: ['https://maps.googleapis.com/maps/api/js?key=AIzaSyAbNq1iFLnZLkUZU5WFGRb-PXR_s9Ssjyo&libraries=places'],
-  scope: [
-    'https://www.googleapis.com/auth/analytics.readonly',
-    'https://www.googleapis.com/auth/analytics'
-  ].join(' ')
-};
 
 
 @NgModule({
@@ -54,11 +43,7 @@ const gapiClientConfig: ClientConfig = {
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    GoogleApiModule.forRoot({
-      provide: NG_GAPI_CONFIG,
-      useValue: gapiClientConfig
-    }),
-    AngularFireModule.initializeApp(environment.firebase, 'caveo-app'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     FormsModule,

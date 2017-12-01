@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     console.log('login creds', this.email, this.password);
     this.auth.login(this.email, this.password);
     this.modalService.setStatus('closed');
+    this.router.navigate(['']);
   }
 
   logout() {

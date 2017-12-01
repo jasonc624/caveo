@@ -1,24 +1,33 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "angularfire2/auth";
 import {Observable} from "rxjs/Observable";
 import {AngularFirestore, AngularFirestoreDocument} from "angularfire2/firestore";
 import * as firebase from 'firebase/app';
 import {Router} from "@angular/router";
 import {User} from "../_models/user.model";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 
 export class AuthService {
+
   currentUser;
-  provider;
   user: Observable<firebase.User>;
   private usersDoc: AngularFirestoreDocument<User>;
   users: Observable<User>;
   usersCollection;
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router ) {
-    this.currentUser = afAuth.auth.currentUser;
+  isLoggedIn;
+
+  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        console.log('auth state changed', user);
+        this.isLoggedIn = user;
+      }
+    );
   }
 
 
@@ -74,10 +83,12 @@ export class AuthService {
   writeUserData(user) {
     this.usersCollection.doc(user.uid).set({uid: user.uid, email: user.email});
   }
+
   updateUserData(id, data) {
     this.usersDoc = this.afs.doc<User>(`users/${id}`);
     this.usersDoc.update(data);
   }
+
 }
 
 
