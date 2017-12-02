@@ -6,9 +6,12 @@ import {ListingNotFoundComponent} from "./listings/listing-not-found/listing-not
 import {SplashComponent} from "./splash/splash.component";
 import {HomeComponent} from "./home/home.component";
 import {AuthGuard} from "./_guards/auth.guard";
+import {ProfileComponent} from "./profile/profile.component";
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'app', component: HomeComponent, canActivate: [AuthGuard], children: [
+    {path: 'profile', component: ProfileComponent}]
+  },
   {path: 'landing', component: SplashComponent},
   // {path: 'login', component: LoginComponent},
   {
@@ -17,7 +20,7 @@ const appRoutes: Routes = [
     {path: ':address/not-found', component: ListingNotFoundComponent},
   ]
   },
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: 'app'}
 ];
 @NgModule({
   imports: [

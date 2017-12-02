@@ -17,18 +17,16 @@ export class AuthService {
   private usersDoc: AngularFirestoreDocument<User>;
   users: Observable<User>;
   usersCollection;
-  isLoggedIn;
+  isLoggedIn = new Subject();
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.currentUser = afAuth.auth.currentUser;
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
-    firebase.auth().onAuthStateChanged(
-      (user) => {
+    firebase.auth().onAuthStateChanged((user) => {
         console.log('auth state changed', user);
-        this.isLoggedIn = user;
-      }
-    );
+        this.isLoggedIn.next(user);
+    });
   }
 
 
@@ -37,6 +35,8 @@ export class AuthService {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(res => {
         console.log('success you logged in!', res);
+        localStorage.setItem('uid', res.uid);
+        this.router.navigate(['app']);
       })
       .catch(err => console.log('you fucked up buddy', err));
   }
@@ -54,6 +54,7 @@ export class AuthService {
         console.log('success you registered', res);
         // this.router.navigate(['']);
         this.writeUserData(res);
+        this.updateUserData(res.uid, data);
 
       })
       .catch(err => {
@@ -82,7 +83,7 @@ export class AuthService {
   // }
 
   writeUserData(user) {
-    this.usersCollection.doc(user.uid).set({uid: user.uid, email: user.email});
+    this.usersCollection.doc(user.uid).set({uid: user.uid, email: user.email, phone: user.phoneNumber});
   }
 
   updateUserData(id, data) {

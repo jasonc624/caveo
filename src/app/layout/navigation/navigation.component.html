@@ -14,7 +14,7 @@
 <nav class="sidebar" *ngIf="!isLanding" >
   <div class="container-inner clearfix">
     <div class="navbar-brand">
-      CAVEO
+      <a [routerLink]="['/']">Caveo</a>
     </div>
     <div class="pull-right">
       <div class="navbar-brand">
@@ -22,8 +22,13 @@
       </div>
     </div>
     <div class="user-info text-center">
-      <div class="avatar"></div>
-      <div class="user-name">Jason Cardenas</div>
+      <div class="avatar">
+        <input type="file" #avatarUpload (change)="uploadAvatar()">
+        <div class="avatar-container">
+          <img [src]="(user | async)?.avatar" alt="">
+        </div>
+      </div>
+      <div class="user-name">{{(user | async).display_name}}</div>
       <div class="rating"></div>
       <div class="revenue"></div>
     </div>
@@ -31,7 +36,7 @@
       <li><a href="">Inbox</a></li>
       <li><a href="">Favorites</a></li>
       <li><a href="">Seller Dashboard</a></li>
-      <li><a href="">Profile</a></li>
+      <li><a [routerLink]="['app','profile']">Profile</a></li>
       <li><a href="">Help</a></li>
     </ul>
   </div>

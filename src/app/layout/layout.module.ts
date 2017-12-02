@@ -8,6 +8,7 @@ import { LoginModule } from '../login/login.module';
 import { PropertySearchModule } from '../property-search/property-search.module';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RegisterModule} from "../register/register.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {RegisterModule} from "../register/register.module";
     LoginModule,
     RegisterModule,
     PropertySearchModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   declarations: [NavigationComponent, FooterComponent, ModalComponent],
   exports: [NavigationComponent, FooterComponent, ModalComponent]

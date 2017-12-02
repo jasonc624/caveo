@@ -1,4 +1,3 @@
-///<reference path="../../node_modules/ng-gapi/lib/GoogleApiService.d.ts"/>
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -26,6 +25,10 @@ import {AuthService} from "./_services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuard} from "./_guards/auth.guard";
 import {AppRoutingModule} from "./app-routing.module";
+import { ProfileComponent } from './profile/profile.component';
+import {ImageUploadModule} from "angular2-image-upload";
+
+
 
 
 @NgModule({
@@ -35,7 +38,8 @@ import {AppRoutingModule} from "./app-routing.module";
     HomeComponent,
     ListingsComponent,
     ListingNotFoundComponent,
-    SearchComponent
+    SearchComponent,
+    ProfileComponent
   ],
   exports: [LoginComponent, RegisterComponent],
   imports: [
@@ -43,6 +47,7 @@ import {AppRoutingModule} from "./app-routing.module";
     BrowserModule,
     AppRoutingModule,
     NgbModule.forRoot(),
+    ImageUploadModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features

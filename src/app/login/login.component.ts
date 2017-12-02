@@ -17,8 +17,7 @@ export class LoginComponent implements OnInit {
   password;
   constructor(private modalService: ModalService,
               private auth: AuthService,
-              public afAuth: AngularFireAuth,
-              private router: Router) {
+              public afAuth: AngularFireAuth) {
     this.user = afAuth.authState;
   }
 
@@ -28,7 +27,6 @@ export class LoginComponent implements OnInit {
     console.log('login creds', this.email, this.password);
     this.auth.login(this.email, this.password);
     this.modalService.setStatus('closed');
-    this.router.navigate(['']);
   }
 
   logout() {
