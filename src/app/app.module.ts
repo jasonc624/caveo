@@ -29,8 +29,8 @@ import { ProfileComponent } from './profile/profile.component';
 import {ImageUploadModule} from "angular2-image-upload";
 import {PropertyService} from "./_services/property.service";
 import { PropertyLandingComponent } from './property-landing/property-landing.component';
-
-
+import { NewListingComponent } from './new-listing/new-listing.component';
+import { NewListingModule } from "./new-listing/new-listing.module";
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { PropertyLandingComponent } from './property-landing/property-landing.co
     ProfileComponent,
     PropertyLandingComponent
   ],
-  exports: [LoginComponent, RegisterComponent],
+  exports: [LoginComponent, RegisterComponent, NewListingComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -58,7 +58,8 @@ import { PropertyLandingComponent } from './property-landing/property-landing.co
     LayoutModule,
     LoginModule,
     RegisterModule,
-    PropertySearchModule
+    PropertySearchModule,
+    NewListingModule
   ],
   providers: [ModalService, PropertyService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

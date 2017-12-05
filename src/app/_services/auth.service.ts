@@ -52,13 +52,12 @@ export class AuthService {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(res => {
         console.log('success you registered', res);
-        // this.router.navigate(['']);
         this.writeUserData(res);
         this.updateUserData(res.uid, data);
-
       })
       .catch(err => {
-        console.log('something went wrong while registering', err)
+        console.log('something went wrong while registering', err);
+        return err;
       });
   }
 
