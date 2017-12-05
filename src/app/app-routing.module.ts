@@ -6,12 +6,13 @@ import {SplashComponent} from "./splash/splash.component";
 import {HomeComponent} from "./home/home.component";
 import {AuthGuard} from "./_guards/auth.guard";
 import {ProfileComponent} from "./profile/profile.component";
+import {PropertyLandingComponent} from "./property-landing/property-landing.component";
 
 const appRoutes: Routes = [
   {path: 'app', component: HomeComponent, canActivate: [AuthGuard], children: [
     {path: 'profile', component: ProfileComponent},
     {path: 'search', children: [
-      {path: ':address', component: ListingsComponent}
+      {path: ':address', component: PropertyLandingComponent}
       // {path: '**', component: ListingNotFoundComponent}
     ]}
     ]

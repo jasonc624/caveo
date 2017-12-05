@@ -1,10 +1,13 @@
 <div class="search-container">
   <input type="text" (click)="filters()" (ngModelChange)="queryAddresses($event)" [ngModel]="searchVal" class="search-bar">
-  <ng-container *ngIf="addrMatch">
+  <ng-container *ngIf="suggestionsOpen">
     <ul class="suggestions">
-      <li *ngFor="let match of addrMatch">
-        <a (click)="searchAddress(match)">{{match.formatted_address}}</a>
-      </li>
+      <ng-container  *ngIf="addrMatch">
+        <li *ngFor="let match of addrMatch">
+          <a (click)="searchAddress(match)">{{match.formatted_address}}</a>
+        </li>
+      </ng-container>
+      <li *ngIf="addrMatch == false"> <h5>Address does not exist please be more specific.</h5></li>
     </ul>
   </ng-container>
 </div>

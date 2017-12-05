@@ -28,6 +28,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import { ProfileComponent } from './profile/profile.component';
 import {ImageUploadModule} from "angular2-image-upload";
 import {PropertyService} from "./_services/property.service";
+import { PropertyLandingComponent } from './property-landing/property-landing.component';
 
 
 
@@ -40,7 +41,8 @@ import {PropertyService} from "./_services/property.service";
     ListingsComponent,
     ListingNotFoundComponent,
     SearchComponent,
-    ProfileComponent
+    ProfileComponent,
+    PropertyLandingComponent
   ],
   exports: [LoginComponent, RegisterComponent],
   imports: [

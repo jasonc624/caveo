@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
   searchVal = '';
   timer = null;
   addrMatch;
-
+  suggestionsOpen;
   constructor(private http: HttpClient,
               private propertyService: PropertyService,
               private router: Router) {
@@ -26,6 +26,7 @@ export class SearchComponent implements OnInit {
   }
   queryAddresses(val) {
     clearTimeout(this.timer);
+    this.suggestionsOpen = true;
     this.timer = setTimeout( () => {this.placeMatch(val)}, 1500);
   }
 
@@ -36,9 +37,8 @@ export class SearchComponent implements OnInit {
       console.log('response from places api', res);
       if (res.results) {
         this.addrMatch = res.results;
-        console.log('the address data', this.addrMatch);
       } else {
-        this.addrMatch = 'Address Not Found';
+        this.addrMatch = false;
       }
     });
   }
@@ -52,6 +52,7 @@ export class SearchComponent implements OnInit {
         this.propertyService.createProperty(place);
       }
       this.router.navigate(['app','search', place.place_id]);
+      this.suggestionsOpen = false;
     });
   }
 }

@@ -7,4 +7,5 @@ export interface Property {
   zip?: string,
   country?: string,
   formatted_address?: string,
+  property_image?: string
 }
