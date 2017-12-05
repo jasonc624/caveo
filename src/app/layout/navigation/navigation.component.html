@@ -28,7 +28,7 @@
           <img [src]="(user | async)?.avatar" alt="">
         </div>
       </div>
-      <div class="user-name">{{(user | async).display_name}}</div>
+      <div class="user-name">{{(user | async)?.display_name}}</div>
       <div class="rating"></div>
       <div class="revenue"></div>
     </div>

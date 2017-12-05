@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from "rxjs/Observable";
 import {AngularFirestore} from "angularfire2/firestore";
+import {PropertyService} from "../_services/property.service";
+import {Property} from "../_models/property.model";
 
 @Component({
   selector: 'ng-listings',
@@ -9,22 +11,16 @@ import {AngularFirestore} from "angularfire2/firestore";
   styleUrls: ['./listings.component.sass']
 })
 export class ListingsComponent implements OnInit {
-  listings:Observable<any[]>;
-  constructor(public db: AngularFirestore, private route: ActivatedRoute, private router:Router) {
-    this.listings = db.collection('listings').valueChanges();
+  property:Observable<Property>;
+  constructor(private route: ActivatedRoute,
+              private propertyService: PropertyService) {
+
   }
 
   ngOnInit() {
     const address = this.route.snapshot.params['address'];
-    // this.firebaseService.getListings(address).subscribe(res => {
-    //   if( res.length === 0 ) {
-    //     this.router.navigate(['listings',address,'not-found']);
-    //   } else {
-    //     console.log('getListings', res);
-    //     this.listings = res;
-    //   }
-    // }, err => console.log('listing not found', err));
-
+    this.property = this.propertyService.getProperty(address).valueChanges();
+    console.log('the property', this.property);
   }
 
 }

@@ -24,6 +24,7 @@ export class NavigationComponent implements OnInit {
   constructor(public router: Router, public auth: AuthService, private modalService: ModalService, private afs: AngularFirestore) {
     this.userDoc = afs.doc<User>('users/' + this.Uid);
     this.user = this.userDoc.valueChanges();
+    // console.log("the user", this.user);
   }
 
   ngOnInit() {

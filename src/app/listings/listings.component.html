@@ -1,8 +1,14 @@
 <div class="container-fluid page-container">
-  <div class="col-xs-12 col-sm-3" *ngFor="let listing of listings | async">
-    <div class="listing">
-      {{listing.name}}
-      {{listing.price}}
+  <h1>{{(property | async)?.formatted_address}}</h1>
+  <ng-container>
+    <div>
+
     </div>
-  </div>
+  </ng-container>
+  <!--<div class="col-xs-12 col-sm-3" *ngFor="let listing of listings | async">-->
+    <!--<div class="listing">-->
+      <!--{{listing.name}}-->
+      <!--{{listing.price}}-->
+    <!--</div>-->
+  <!--</div>-->
 </div>

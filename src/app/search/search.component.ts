@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {PropertyService} from "../_services/property.service";
 
 @Component({
   selector: 'app-search',
@@ -11,7 +13,10 @@ export class SearchComponent implements OnInit {
   searchVal = '';
   timer = null;
   addrMatch;
-  constructor(private http: HttpClient) {
+
+  constructor(private http: HttpClient,
+              private propertyService: PropertyService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -23,6 +28,7 @@ export class SearchComponent implements OnInit {
     clearTimeout(this.timer);
     this.timer = setTimeout( () => {this.placeMatch(val)}, 1500);
   }
+
   placeMatch(val) {
     const string = val.split(/[ ,]+/).join('+');
     console.log('value being typed', string);
@@ -30,10 +36,22 @@ export class SearchComponent implements OnInit {
       console.log('response from places api', res);
       if (res.results) {
         this.addrMatch = res.results;
+        console.log('the address data', this.addrMatch);
       } else {
         this.addrMatch = 'Address Not Found';
       }
     });
   }
 
+  searchAddress(place) {
+    console.log('searching place', place);
+    this.propertyService.propertyExists(place).then(bool => {
+      if (bool) {
+        //Nothing
+      } else {
+        this.propertyService.createProperty(place);
+      }
+      this.router.navigate(['app','search', place.place_id]);
+    });
+  }
 }

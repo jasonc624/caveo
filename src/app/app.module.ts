@@ -27,6 +27,7 @@ import {AuthGuard} from "./_guards/auth.guard";
 import {AppRoutingModule} from "./app-routing.module";
 import { ProfileComponent } from './profile/profile.component';
 import {ImageUploadModule} from "angular2-image-upload";
+import {PropertyService} from "./_services/property.service";
 
 
 
@@ -57,7 +58,7 @@ import {ImageUploadModule} from "angular2-image-upload";
     RegisterModule,
     PropertySearchModule
   ],
-  providers: [ModalService, AuthService, AuthGuard],
+  providers: [ModalService, PropertyService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

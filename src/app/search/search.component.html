@@ -3,7 +3,7 @@
   <ng-container *ngIf="addrMatch">
     <ul class="suggestions">
       <li *ngFor="let match of addrMatch">
-        {{match.formatted_address}}
+        <a (click)="searchAddress(match)">{{match.formatted_address}}</a>
       </li>
     </ul>
   </ng-container>
