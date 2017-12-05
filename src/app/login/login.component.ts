@@ -28,15 +28,4 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.email, this.password);
     this.modalService.setStatus('closed');
   }
-
-  logout() {
-    this.auth.logout();
-  }
-
-  register() {
-    console.log('reg', this.email, this.password);
-    this.afAuth.auth.createUserWithEmailAndPassword(this.email, this.password)
-      .then(res => console.log('success you registered', res))
-      .catch(err => console.log('something went wrong while registering', err) );
-  }
 }

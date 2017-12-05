@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../_services/auth.service";
 import {Router} from "@angular/router";
+import {ModalService} from "../_services/modal.service";
 
 @Component({
   selector: 'app-register',
@@ -19,11 +20,14 @@ export class RegisterComponent implements OnInit {
     avatar:'',
     phone:''
   };
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService,
+              private modalService: ModalService) { }
   ngOnInit() {
   }
   register(user) {
     this.auth.register(user.email, user.password, this.user);
+    this.modalService.setStatus('closed');
+    this.modalService.setStatus('login');
   }
 
 }

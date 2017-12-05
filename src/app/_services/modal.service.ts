@@ -7,8 +7,12 @@ export class ModalService {
   constructor() {
     this.modalStatus = new Subject();
   }
-  setStatus(status) {
-    this.modalStatus.next(status);
+  setStatus(status, options?) {
+    if(options) {
+      this.modalStatus.next({status: status, options: options});
+    } else {
+      this.modalStatus.next(status);
+    }
   }
 
 }

@@ -51,8 +51,9 @@ export class SearchComponent implements OnInit {
       } else {
         this.propertyService.createProperty(place);
       }
-      this.router.navigate(['app','search', place.place_id]);
       this.suggestionsOpen = false;
+      this.searchVal = place.formatted_address;
+      this.router.navigate(['app','search', place.place_id]);
     });
   }
 }
