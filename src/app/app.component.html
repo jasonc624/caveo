@@ -1,5 +1,5 @@
 <div class="row">
-  <ng-navigation (purpose)="modalPurpose($event, content)" [ngClass]="{'col-sm-2 rp0 lp0': !isLanding }"></ng-navigation>
+  <ng-navigation [ngClass]="{'col-sm-2 rp0 lp0': !isLanding }"></ng-navigation>
   <app-search *ngIf="!isLanding" class="col-sm-10 lp0 rp0"></app-search>
   <div [ngClass]="{'splash-page': isLanding, 'col-sm-10': !isLanding}">
     <router-outlet></router-outlet>

@@ -1,6 +1,6 @@
 export interface Property {
-  picture?: string,
   uid: string,
+  picture?: string,
   name?: string,
   city?: string,
   state?: string,

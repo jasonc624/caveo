@@ -10,24 +10,23 @@ import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from "angularfire2/firestore";
 import {AngularFireAuthModule} from 'angularfire2/auth';
 
-import {FormsModule} from '@angular/forms';
-import {HomeComponent} from './home/home.component';
-import {ListingsComponent} from './listings/listings.component';
-import {LoginComponent} from './login/login.component';
-import {ListingNotFoundComponent} from './listings/listing-not-found/listing-not-found.component';
-import {ModalService} from './_services/modal.service';
-import {LoginModule} from './login/login.module';
-import {PropertySearchModule} from './property-search/property-search.module';
+import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
+import { ListingsComponent } from './listings/listings.component';
+import { LoginComponent } from './login/login.component';
+import { ListingNotFoundComponent } from './listings/listing-not-found/listing-not-found.component';
+import { ModalService } from './_services/modal.service';
+import { LoginModule } from './login/login.module';
 import { SearchComponent } from './search/search.component';
 import { RegisterComponent } from './register/register.component';
-import {RegisterModule} from "./register/register.module";
-import {AuthService} from "./_services/auth.service";
-import {HttpClientModule} from "@angular/common/http";
-import {AuthGuard} from "./_guards/auth.guard";
-import {AppRoutingModule} from "./app-routing.module";
+import { RegisterModule } from "./register/register.module";
+import { AuthService } from "./_services/auth.service";
+import { HttpClientModule } from "@angular/common/http";
+import { AuthGuard } from "./_guards/auth.guard";
+import { AppRoutingModule } from "./app-routing.module";
 import { ProfileComponent } from './profile/profile.component';
-import {ImageUploadModule} from "angular2-image-upload";
-import {PropertyService} from "./_services/property.service";
+import { ImageUploadModule } from "angular2-image-upload";
+import { PropertyService } from "./_services/property.service";
 import { PropertyLandingComponent } from './property-landing/property-landing.component';
 import { NewListingComponent } from './new-listing/new-listing.component';
 import { NewListingModule } from "./new-listing/new-listing.module";
@@ -58,8 +57,7 @@ import { NewListingModule } from "./new-listing/new-listing.module";
     LayoutModule,
     LoginModule,
     RegisterModule,
-    PropertySearchModule,
-    NewListingModule
+    NewListingModule,
   ],
   providers: [ModalService, PropertyService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

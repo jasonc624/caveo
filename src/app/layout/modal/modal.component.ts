@@ -7,7 +7,7 @@ import {ModalService} from '../../_services/modal.service';
   styleUrls: ['./modal.component.sass']
 })
 export class ModalComponent implements OnInit {
-  @Input() purpose;
+  @Input('purpose') purpose;
   constructor(public modalService: ModalService) {
   }
 

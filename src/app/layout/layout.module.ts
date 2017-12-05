@@ -5,10 +5,10 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { LoginModule } from '../login/login.module';
-import { PropertySearchModule } from '../property-search/property-search.module';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {RegisterModule} from "../register/register.module";
 import {FormsModule} from "@angular/forms";
+import { NewListingModule } from "../new-listing/new-listing.module";
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import {FormsModule} from "@angular/forms";
     RouterModule,
     LoginModule,
     RegisterModule,
-    PropertySearchModule,
+    NewListingModule,
     NgbModule,
     FormsModule
   ],

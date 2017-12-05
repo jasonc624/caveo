@@ -26,10 +26,6 @@ export class AppComponent {
       }
     });
   }
-
-  modalPurpose(event, content?) {
-    this.showModal = event;
-  }
 }
 
 

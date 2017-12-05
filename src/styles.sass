@@ -21,7 +21,16 @@ body
   border: 1px solid #dcdcdc
   @include boxShadow
   background: #fff
+  &.danger
+    background: $app-danger
+    color: #fff
+  &.good
+    color: $app-primary
   &:active
     @include noBoxShadow
+.cav-btn-group
+  .cav-btn
+    margin: 0 5px
+    display: inline-block
 
 
