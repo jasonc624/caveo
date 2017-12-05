@@ -38,13 +38,19 @@ export class AuthService {
         localStorage.setItem('uid', res.uid);
         this.router.navigate(['app']);
       })
-      .catch(err => console.log('you fucked up buddy', err));
+      .catch(err => {
+        alert(err);
+        console.log('you fucked up buddy', err)
+      });
   }
 
   logout() {
     this.afAuth.auth.signOut()
       .then(res => console.log('you successfully signed out', res))
-      .catch(err => console.log('something went wrong', err));
+      .catch(err => {
+        alert(err);
+        console.log('something went wrong', err)
+      });
   }
 
   register(email, password, data?: object) {
@@ -57,7 +63,7 @@ export class AuthService {
       })
       .catch(err => {
         console.log('something went wrong while registering', err);
-        return err;
+        alert(err);
       });
   }
 

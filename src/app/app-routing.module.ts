@@ -18,13 +18,6 @@ const appRoutes: Routes = [
     ]
   },
   {path: 'landing', component: SplashComponent},
-  // {path: 'login', component: LoginComponent},
-  // {
-  //   path: 'listings', children: [
-  //   {path: ':address', component: ListingsComponent},
-  //   {path: ':address/not-found', component: ListingNotFoundComponent},
-  // ]
-  // },
   {path: '**', redirectTo: 'app'}
 ];
 @NgModule({

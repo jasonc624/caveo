@@ -1,0 +1,19 @@
+<div class="property-container">
+  <div class="property-meta clearfix">
+    <div class="property-name pull-left">
+      <h1>{{(property | async)?.formatted_address}}</h1>
+    </div>
+    <div class="property-actions clearfix pull-right">
+      <div class="add pull-right">
+        <div (click)="addDoc() " class="cav-btn">Upload</div>
+      </div>
+      <!--<div class="edit pull-right">-->
+        <!--<button (click)="editDoc()" class="cav-btn">Edit</button>-->
+      <!--</div>-->
+    </div>
+  </div>
+  <div class="property-pov" [ngStyle]=" {'background-image' : 'url(' + (property | async)?.property_image + ')' }">
+  </div>
+</div>
+
+<ng-listings></ng-listings>
