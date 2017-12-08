@@ -17,7 +17,7 @@
             <label for="type">Cavedoc Type</label>
             <div class="form-check">
               <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="type" ngModel #type="ngModel" value="appraisal" checked>
+                <input class="form-check-input" type="radio" name="type" ngModel #type="ngModel" value="appraisal">
                 Appraisal
               </label>
             </div>
@@ -40,17 +40,10 @@
     --><div id="cover">
     <div class="form-group">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <label for="">Upload Cover Image</label>
           <label class="custom-file">
-            <input type="file" class="custom-file-input" #coverUpload ngModel name="cover" #cover="ngModel" required>
-            <span class="custom-file-control"></span>
-          </label>
-        </div>
-        <div class="col-sm-6">
-          <label>Upload the Cavedoc</label>
-          <label class="custom-file">
-            <input type="file" class="custom-file-input" #caveDocUpload ngModel name="document" #document="ngModel" required>
+            <input type="file" class="custom-file-input"  #coverUpload ngModel name="coverUrl" #coverUrl="ngModel" accept="image/x-png,image/gif,image/jpeg" required>
             <span class="custom-file-control"></span>
           </label>
         </div>
@@ -58,16 +51,48 @@
     </div>
     </div ><!--
     --><div id="document">
-      Finish
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Upload the Cavedoc</label>
+          <label class="custom-file">
+            <input type="file" class="custom-file-input" #caveDocUpload ngModel name="docUrl" #docUrl="ngModel" accept="application/pdf" required>
+            <span class="custom-file-control"></span>
+          </label>
+        </div>
+        <div class="col-sm-6">
+        <label>Proof of Ownership</label>
+        <label class="custom-file">
+          <input type="file" class="custom-file-input"  #proofUpload ngModel name="proofUrl" #proofUrl="ngModel" accept="application/pdf" required>
+          <span class="custom-file-control"></span>
+        </label>
+      </div>
+      </div>
+    </div>
     </div><!--
-    -->
+    --><div id="agreement">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-12">
+          <p>These are documents that I bought and paid for myself or that I have received explicit approval to resell them as my own from the original owner</p>
+          <div class="label">
+            <input type="checkbox">
+            <span>Yes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
 
   <div class="row">
-    <div class="cav-btn-group col-sm-12 text-center">
-      <div (click)="previousStep(f)" class="cav-btn danger">Cancel</div>
-      <div (click)="previousStep(f)" class="cav-btn">Previous</div>
-      <div (click)="nextStep(f)" class="cav-btn good">Next</div>
+    <div class="col-sm-12">
+      <div class="cav-btn-group pull-right text-center">
+        <div (click)="cancelUpload()" class="cav-btn danger">Cancel</div>
+        <div (click)="previousStep(f)" class="cav-btn">Previous</div>
+        <div (click)="nextStep(f)" *ngIf="step < 4"class="cav-btn good">Next</div>
+        <div (click)="submitNewListing(f)" *ngIf="step === 4" class="cav-btn good">Finish</div>
+      </div>
     </div>
   </div>
 </form>

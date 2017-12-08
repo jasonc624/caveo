@@ -17,7 +17,7 @@ export class AuthService {
   private usersDoc: AngularFirestoreDocument<User>;
   users: Observable<User>;
   usersCollection;
-  isLoggedIn = new Subject();
+  isLoggedIn = new BehaviorSubject<any>('');
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.currentUser = afAuth.auth.currentUser;
