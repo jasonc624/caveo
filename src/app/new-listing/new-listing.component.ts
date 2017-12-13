@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 import {AuthService} from "../_services/auth.service";
 import {AngularFirestore} from "angularfire2/firestore";
 import {ModalService} from "../_services/modal.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-new-listing',
@@ -28,15 +29,15 @@ export class NewListingComponent implements OnInit {
 
   caveDocCollection;
 
-  form = {
-    name: '',
-    price: 0,
-    type: '',
-    coverUrl: '',
-    docUrl: '',
-    proofUrl: '',
-    tou: false,
-  };
+  listingForm = new FormGroup({
+    name: new FormControl,
+    price: new FormControl,
+    type: new FormControl,
+    coverUrl: new FormControl,
+    docUrl: new FormControl,
+    proofUrl: new FormControl,
+    tou: new FormControl(),
+  });
 
   constructor(private Auth: AuthService,
               private modalService: ModalService,
@@ -63,9 +64,9 @@ export class NewListingComponent implements OnInit {
     }
   }
 
-  submitNewListing(form) {
-    Object.assign({state: 'complete'}, form);
-    this.caveDocCollection.doc(this.listing.options.id).set(form);
+  submitNewListing() {
+    Object.assign({state: 'complete'}, this.listingForm);
+    this.caveDocCollection.doc(this.listing.options.id).set(this.listingForm);
     this.modalService.setStatus('closed');
   }
 
@@ -79,7 +80,7 @@ export class NewListingComponent implements OnInit {
       });
     }
     this.storageRef.child(this.storageBucket + '/covers/' + cover.files[0].name).put(cover.files[0]).then((snapshot) => {
-      this.form.coverUrl = snapshot.downloadURL;
+      this.listingForm.patchValue({coverUrl:snapshot.downloadURL});
       this.docsToUploadArr.push({name: 'cover', path: snapshot.metadata.fullPath});
       console.log('docs to upload', this.docsToUploadArr);
     });
@@ -89,13 +90,13 @@ export class NewListingComponent implements OnInit {
     const doc: any = this.caveDoc.nativeElement;
     if (this.docsToUploadArr.length > 0){
       this.docsToUploadArr.forEach(item => {
-        if(item.name == 'cover') {
+        if(item.name == 'doc') {
           firebase.storage().ref().child(item.path).delete();
         }
       });
     }
     this.storageRef.child(this.storageBucket + '/docs/' + doc.files[0].name).put(doc.files[0]).then((snapshot) => {
-      this.form.docUrl = snapshot.downloadURL;
+      this.listingForm.patchValue({docUrl:snapshot.downloadURL});
       this.docsToUploadArr.push({name: 'doc', path: snapshot.metadata.fullPath});
       console.log('docs to upload', this.docsToUploadArr);
     });
@@ -105,13 +106,13 @@ export class NewListingComponent implements OnInit {
     const proof: any = this.proof.nativeElement;
     if (this.docsToUploadArr.length > 0){
       this.docsToUploadArr.forEach(item => {
-        if(item.name == 'cover') {
+        if(item.name == 'proof') {
           firebase.storage().ref().child(item.path).delete();
         }
       });
     }
     this.storageRef.child(this.storageBucket + '/proof/' + proof.files[0].name).put(proof.files[0]).then((snapshot) => {
-      this.form.proofUrl = snapshot.downloadURL;
+      this.listingForm.patchValue({proofUrl:snapshot.downloadURL});
       this.docsToUploadArr.push({name: 'proof', path: snapshot.metadata.fullPath});
       console.log('docs to upload', this.docsToUploadArr);
     });
