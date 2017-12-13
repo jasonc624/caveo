@@ -29,5 +29,8 @@ export class RegisterComponent implements OnInit {
     this.modalService.setStatus('closed');
     this.modalService.setStatus('login');
   }
+  closeModal() {
+    this.modalService.setStatus('closed');
+  }
 
 }

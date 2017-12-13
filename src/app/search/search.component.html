@@ -1,5 +1,5 @@
 <div class="search-container">
-  <input type="text" (click)="filters()" (ngModelChange)="queryAddresses($event)" [ngModel]="searchVal" class="search-bar">
+  <input type="text" (click)="filters()" placeholder="Search a property" (ngModelChange)="queryAddresses($event)" [ngModel]="searchVal" class="search-bar">
   <ng-container *ngIf="suggestionsOpen">
     <ul class="suggestions">
       <ng-container  *ngIf="addrMatch">

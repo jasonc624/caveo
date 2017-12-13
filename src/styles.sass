@@ -28,9 +28,14 @@ body
     color: $app-primary
   &:active
     @include noBoxShadow
+  &.disabled
+    background: #bebebe
+    color: #000
+    pointer-events: none
+
 .cav-btn-group
   .cav-btn
-    margin: 0 5px
+    margin: 1px 5px
     display: inline-block
 
 

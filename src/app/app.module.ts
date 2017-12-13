@@ -30,6 +30,7 @@ import { PropertyService } from "./_services/property.service";
 import { PropertyLandingComponent } from './property-landing/property-landing.component';
 import { NewListingComponent } from './new-listing/new-listing.component';
 import { NewListingModule } from "./new-listing/new-listing.module";
+import { ListingComponent } from './listings/listing/listing.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { NewListingModule } from "./new-listing/new-listing.module";
     ListingNotFoundComponent,
     SearchComponent,
     ProfileComponent,
-    PropertyLandingComponent
+    PropertyLandingComponent,
+    ListingComponent
   ],
   exports: [LoginComponent, RegisterComponent, NewListingComponent],
   imports: [

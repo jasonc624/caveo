@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Property} from "../_models/property.model";
 import {PropertyService} from "../_services/property.service";
@@ -13,12 +13,12 @@ import {AngularFirestore} from "angularfire2/firestore";
 })
 export class PropertyLandingComponent implements OnInit {
   sub;
-  address:string;
-  property:Observable<Property>;
+  address: string;
+  property: Observable<Property>;
   propertyCollection;
-  cavedocCollection;
+
   constructor(private route: ActivatedRoute,
-              private afs:  AngularFirestore,
+              private afs: AngularFirestore,
               private propertyService: PropertyService,
               private modalService: ModalService) {
   }
@@ -30,14 +30,29 @@ export class PropertyLandingComponent implements OnInit {
     });
 
   }
+
   addDoc() {
-    this.propertyCollection = this.afs.doc('' + `properties/${this.address}`);
-    this.cavedocCollection = this.propertyCollection.collection('cavedoc');
-    this.cavedocCollection.doc().set({
-      uid: "testing mother fucker"
-    });
-    this.modalService.setStatus('newListing', this.address);
+    const docRef = this.afs.collection('properties').doc(this.address);
+    const queryObservable = docRef.collection('cavedocs', ref => ref.where('state', '==', 'in progress')).valueChanges();
+
+    // subscribe to changes
+    // queryObservable.subscribe((queriedItems:any) => {
+    //   console.log('queried items', queriedItems);
+    //   queriedItems.forEach(item => {
+    //     console.log('item', item);
+    //     docRef.collection('cavedocs').doc(item.id).delete().then(res => {
+    //       console.log('deleted unfinished listings');
+    //     });
+    //   });
+    // });
+    const id = this.afs.createId();
+    const docInstance = {id, addressId: this.address, state: 'in progress'};
+    this.propertyCollection = this.afs.collection( 'properties/' + this.address + '/cavedocs');
+    this.propertyCollection.doc(docInstance.id).set(docInstance);
+    this.modalService.setStatus('newListing', docInstance);
+
   }
+
   editDoc() {
 
   }

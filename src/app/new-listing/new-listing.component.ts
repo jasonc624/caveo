@@ -1,6 +1,8 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import * as firebase from "firebase";
 import {AuthService} from "../_services/auth.service";
+import {AngularFirestore} from "angularfire2/firestore";
+import {ModalService} from "../_services/modal.service";
 
 @Component({
   selector: 'app-new-listing',
@@ -14,92 +16,105 @@ export class NewListingComponent implements OnInit {
   @ViewChild('caveDocUpload') caveDoc: ElementRef;
   @ViewChild('coverUpload') cover: ElementRef;
   @ViewChild('proofUpload') proof: ElementRef;
+
   @Input('listing') listing;
 
-  coverFileUrl;
-  cavedocFileUrl;
-  proofFileUrl;
-
   storageRef = firebase.storage().ref();
+  storageBucket;
+
+  docsToUploadArr = [];
 
   User;
-  constructor(private Auth:AuthService) { }
+
+  caveDocCollection;
+
+  constructor(private Auth: AuthService,
+              private modalService: ModalService,
+              private afs: AngularFirestore) {
+    console.log('init new listing modal');
+    //TODO: delete unfinished listings on page refresh
+
+  }
+
   ngOnInit() {
     this.User = this.Auth.isLoggedIn.getValue();
+    this.caveDocCollection = this.afs.collection( 'properties/' + this.listing.options.addressId + '/cavedocs');
+    this.storageBucket = 'cavedocs/' + this.listing.options.addressId + '/' + this.User.uid;
+    window.onbeforeunload = (evt) => {
+      console.log('reloading the page!',evt);
+    }
   }
 
   nextStep(f) {
-    console.log('current step', this.step,'form data', f);
+    console.log('current step', this.step, 'form data', f, ' the listing', this.listing);
     if (this.step < 4) {
       this.step++;
     }
   }
+
   previousStep(f) {
-    console.log('prev step', this.step,'form data', f);
+    console.log('prev step', this.step, 'form data', f);
     if (this.step > 1) {
       this.step--;
     }
   }
 
   submitNewListing(f) {
-    console.log('submitting the form', f);
-    if (this.formReady) {
-
+    Object.assign({state: 'complete'}, f.form.value);
+    console.log('submitting the form', f.form.value);
+    this.caveDocCollection.doc(this.listing.options.id).update(f.form.value);
+    if (f.form.valid === 'VALID') {
+      console.log('form is valid submitted');
+    } else {
+      console.log('form invalid');
     }
-
-    // this.uploadDoc().then(res => {
-    //   this.uploadProof();
-    //   console.log('done with first promise');
-    // });
-    // this.uploadCover().then(res => {
-    //   console.log('done with second promise');
-    //   if (f.form.status === 'VALID'){
-    //     console.log('form valid',f);
-    //     f.value.coverUrl = this.coverFileUrl;
-    //     f.value.docUrl = this.cavedocFileUrl;
-    //     f.value.proofUrl = this.proofFileUrl;
-    //   }
-    // })
-  }
-  uploadCover() {
-    const promise = new Promise((resolve, reject) => {
-      const cover:any = this.cover.nativeElement;
-      this.storageRef.child('cavedocs/' + this.listing.options + '/' + this.User.uid + '/covers/' + cover.files[0].name).put(cover.files[0]).then( (snapshot) => {
-        this.coverFileUrl = snapshot.downloadURL;
-        console.log('done uploading cover');
-        resolve()
-      });
-    });
-    return promise;
+    this.modalService.setStatus('closed');
   }
 
-  uploadDoc() {
-    const promise = new Promise((resolve, reject) => {
-      const doc:any = this.caveDoc.nativeElement;
-      this.storageRef.child('cavedocs/' + this.listing.options + '/' + this.User.uid + '/docs/' + doc.files[0].name).put(doc.files[0]).then( (snapshot) => {
-        this.cavedocFileUrl = snapshot.downloadURL;
-        console.log('done uploading doc');
-        resolve();
-      });
+  uploadCover(f) {
+    const cover: any = this.cover.nativeElement;
+    this.storageRef.child(this.storageBucket + '/covers/' + cover.files[0].name).put(cover.files[0]).then((snapshot) => {
+      f.form.value.coverUrl = snapshot.downloadURL;
+      this.docsToUploadArr.push(snapshot.metadata.fullPath);
+      console.log('form has cover url?', f);
     });
-    return promise;
   }
 
-  uploadProof() {
-    const promise = new Promise((resolve, reject)=> {
-      const proof:any = this.proof.nativeElement;
-      this.storageRef.child('cavedocs/' + this.listing.options + '/' + this.User.uid + '/proof/' + proof.files[0].name).put(proof.files[0]).then( (snapshot) => {
-        this.proofFileUrl = snapshot.downloadURL;
-        console.log('done uploading proof');
-        resolve();
-      });
+  uploadDoc(f) {
+    const doc: any = this.caveDoc.nativeElement;
+    this.storageRef.child(this.storageBucket + '/docs/' + doc.files[0].name).put(doc.files[0]).then((snapshot) => {
+      f.form.value.docUrl = snapshot.downloadURL;
+      this.docsToUploadArr.push(snapshot.metadata.fullPath);
+      console.log('done uploading cover', this.docsToUploadArr);
     });
-    return promise
+  }
+
+  uploadProof(f) {
+    const proof: any = this.proof.nativeElement;
+    this.storageRef.child(this.storageBucket + '/proof/' + proof.files[0].name).put(proof.files[0]).then((snapshot) => {
+      f.form.value.proofUrl = snapshot.downloadURL;
+      this.docsToUploadArr.push(snapshot.metadata.fullPath);
+      console.log('done uploading cover', this.docsToUploadArr);
+    });
   }
 
   cancelUpload() {
     const storageRef = firebase.storage().ref();
-    // storageRef.child(`${this.basePath}/${name}`).delete()
+    this.docsToUploadArr.forEach(item => {
+      storageRef.child(item).delete()
+        .then(res => {
+          console.log('success deleting files', res)
+        })
+        .catch(err => console.log('err deleting files', err));
+    });
+    this.caveDocCollection.doc(this.listing.options.id).delete().then(res => {
+      console.log('successfully deleted the entry in db');
+      this.modalService.setStatus('closed');
+    });
   }
 
+  closeModal() {
+    this.cancelUpload();
+    this.modalService.setStatus('closed');
+  }
 }

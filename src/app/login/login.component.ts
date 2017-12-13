@@ -23,4 +23,7 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.email, this.password);
     this.modalService.setStatus('closed');
   }
+  closeModal() {
+    this.modalService.setStatus('closed');
+  }
 }
