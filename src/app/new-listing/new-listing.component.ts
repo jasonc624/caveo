@@ -28,11 +28,20 @@ export class NewListingComponent implements OnInit {
 
   caveDocCollection;
 
+  form = {
+    name: '',
+    price: 0,
+    type: '',
+    coverUrl: '',
+    docUrl: '',
+    proofUrl: '',
+    tou: false,
+  };
+
   constructor(private Auth: AuthService,
               private modalService: ModalService,
               private afs: AngularFirestore) {
     console.log('init new listing modal');
-    //TODO: delete unfinished listings on page refresh
 
   }
 
@@ -40,68 +49,78 @@ export class NewListingComponent implements OnInit {
     this.User = this.Auth.isLoggedIn.getValue();
     this.caveDocCollection = this.afs.collection( 'properties/' + this.listing.options.addressId + '/cavedocs');
     this.storageBucket = 'cavedocs/' + this.listing.options.addressId + '/' + this.User.uid;
-    window.onbeforeunload = (evt) => {
-      console.log('reloading the page!',evt);
-    }
   }
 
-  nextStep(f) {
-    console.log('current step', this.step, 'form data', f, ' the listing', this.listing);
+  nextStep() {
     if (this.step < 4) {
       this.step++;
     }
   }
 
-  previousStep(f) {
-    console.log('prev step', this.step, 'form data', f);
+  previousStep() {
     if (this.step > 1) {
       this.step--;
     }
   }
 
-  submitNewListing(f) {
-    Object.assign({state: 'complete'}, f.form.value);
-    console.log('submitting the form', f.form.value);
-    this.caveDocCollection.doc(this.listing.options.id).update(f.form.value);
-    if (f.form.valid === 'VALID') {
-      console.log('form is valid submitted');
-    } else {
-      console.log('form invalid');
-    }
+  submitNewListing(form) {
+    Object.assign({state: 'complete'}, form);
+    this.caveDocCollection.doc(this.listing.options.id).set(form);
     this.modalService.setStatus('closed');
   }
 
-  uploadCover(f) {
+  uploadCover() {
     const cover: any = this.cover.nativeElement;
+    if (this.docsToUploadArr.length > 0){
+      this.docsToUploadArr.forEach(item => {
+        if(item.name == 'cover') {
+          firebase.storage().ref().child(item.path).delete();
+        }
+      });
+    }
     this.storageRef.child(this.storageBucket + '/covers/' + cover.files[0].name).put(cover.files[0]).then((snapshot) => {
-      f.form.value.coverUrl = snapshot.downloadURL;
-      this.docsToUploadArr.push(snapshot.metadata.fullPath);
-      console.log('form has cover url?', f);
+      this.form.coverUrl = snapshot.downloadURL;
+      this.docsToUploadArr.push({name: 'cover', path: snapshot.metadata.fullPath});
+      console.log('docs to upload', this.docsToUploadArr);
     });
   }
 
-  uploadDoc(f) {
+  uploadDoc() {
     const doc: any = this.caveDoc.nativeElement;
+    if (this.docsToUploadArr.length > 0){
+      this.docsToUploadArr.forEach(item => {
+        if(item.name == 'cover') {
+          firebase.storage().ref().child(item.path).delete();
+        }
+      });
+    }
     this.storageRef.child(this.storageBucket + '/docs/' + doc.files[0].name).put(doc.files[0]).then((snapshot) => {
-      f.form.value.docUrl = snapshot.downloadURL;
-      this.docsToUploadArr.push(snapshot.metadata.fullPath);
-      console.log('done uploading cover', this.docsToUploadArr);
+      this.form.docUrl = snapshot.downloadURL;
+      this.docsToUploadArr.push({name: 'doc', path: snapshot.metadata.fullPath});
+      console.log('docs to upload', this.docsToUploadArr);
     });
   }
 
-  uploadProof(f) {
+  uploadProof() {
     const proof: any = this.proof.nativeElement;
+    if (this.docsToUploadArr.length > 0){
+      this.docsToUploadArr.forEach(item => {
+        if(item.name == 'cover') {
+          firebase.storage().ref().child(item.path).delete();
+        }
+      });
+    }
     this.storageRef.child(this.storageBucket + '/proof/' + proof.files[0].name).put(proof.files[0]).then((snapshot) => {
-      f.form.value.proofUrl = snapshot.downloadURL;
-      this.docsToUploadArr.push(snapshot.metadata.fullPath);
-      console.log('done uploading cover', this.docsToUploadArr);
+      this.form.proofUrl = snapshot.downloadURL;
+      this.docsToUploadArr.push({name: 'proof', path: snapshot.metadata.fullPath});
+      console.log('docs to upload', this.docsToUploadArr);
     });
   }
 
   cancelUpload() {
     const storageRef = firebase.storage().ref();
     this.docsToUploadArr.forEach(item => {
-      storageRef.child(item).delete()
+      storageRef.child(item.path).delete()
         .then(res => {
           console.log('success deleting files', res)
         })

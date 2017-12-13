@@ -1,6 +1,10 @@
+@import '../../mixins'
+.modal-title
+  display: inline-block
 .newlisting-form
   overflow-x: hidden
   .step-container
+    @include transition(all, .5s, ease)
     position: relative
     width: 2272px
     &.step-2

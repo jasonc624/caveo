@@ -15,7 +15,6 @@ export class PropertyLandingComponent implements OnInit {
   sub;
   address: string;
   property: Observable<Property>;
-  propertyCollection;
 
   constructor(private route: ActivatedRoute,
               private afs: AngularFirestore,
@@ -32,8 +31,8 @@ export class PropertyLandingComponent implements OnInit {
   }
 
   addDoc() {
-    const docRef = this.afs.collection('properties').doc(this.address);
-    const queryObservable = docRef.collection('cavedocs', ref => ref.where('state', '==', 'in progress')).valueChanges();
+    // const docRef = this.afs.collection('properties').doc(this.address);
+    // const queryObservable = docRef.collection('cavedocs', ref => ref.where('state', '==', 'in progress')).valueChanges();
 
     // subscribe to changes
     // queryObservable.subscribe((queriedItems:any) => {
@@ -47,13 +46,9 @@ export class PropertyLandingComponent implements OnInit {
     // });
     const id = this.afs.createId();
     const docInstance = {id, addressId: this.address, state: 'in progress'};
-    this.propertyCollection = this.afs.collection( 'properties/' + this.address + '/cavedocs');
-    this.propertyCollection.doc(docInstance.id).set(docInstance);
+    // this.propertyCollection = this.afs.collection( 'properties/' + this.address + '/cavedocs');
+    // this.propertyCollection.doc(docInstance.id).set(docInstance);
     this.modalService.setStatus('newListing', docInstance);
-
-  }
-
-  editDoc() {
 
   }
 

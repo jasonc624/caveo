@@ -13,7 +13,6 @@ const appRoutes: Routes = [
     {path: 'profile', component: ProfileComponent},
     {path: 'search', children: [
       {path: ':address', component: PropertyLandingComponent}
-      // {path: '**', component: ListingNotFoundComponent}
     ]}
     ]
   },

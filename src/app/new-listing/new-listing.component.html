@@ -1,16 +1,16 @@
 <div class="modal-header">
-  <h5 class="modal-title">New Listing</h5>
+  <span class="modal-title"><h5>New Listing</h5></span>
   <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <form #f="ngForm" (ngSubmit)="submitNewListing(f)" class="newlisting-form">
+  <form (ngSubmit)="submitNewListing(form)" class="newlisting-form">
     <div class="step-container" [ngClass]="{'step-2': step == 2, 'step-3': step == 3, 'step-4': step == 4}">
       <div id="basic_info">
         <div class="form-group">
           <label for="name">Name of Listing</label>
-          <input name="name" class="form-control" ngModel #name="ngModel" required>
+          <input type="text" class="form-control" [(ngModel)]="form.name" required>
           <small class="form-text text-muted">Make it attractive by adding details such as "Mold check!" or "Asbestos
             free!"
           </small>
@@ -19,31 +19,18 @@
           <div class="row">
             <div class="col-sm-6">
               <label for="price">Set Price</label>
-              <input type="number" class="form-control" name="price" ngModel #price="ngModel" required>
+              <input type="number" class="form-control" [(ngModel)]="form.price" required>
               <small class="form-text text-muted">The more recent your listing is the more you can earn. You can also list
                 it free.
               </small>
             </div>
             <div class="col-sm-6">
               <label for="type">Cavedoc Type</label>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="type" ngModel #type="ngModel" value="appraisal" required>
-                    Appraisal
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="type" ngModel #type="ngModel" value="inspection" required>
-                    Inspection
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="type" ngModel #type="ngModel" value="other" required>
-                    Other
-                  </label>
-                </div>
+              <select class="form-control" [(ngModel)]="form.type" required>
+                <option value="appraisal">Appraisal</option>
+                <option value="inspection">Inspection</option>
+                <option value="other">Other</option>
+              </select>
             </div>
           </div>
         </div>
@@ -52,10 +39,13 @@
       <div class="form-group">
         <div class="row">
           <div class="col-sm-12">
-            <label for="">Upload Cover Image</label>
+            <label>Upload Cover Image</label>
             <label class="custom-file">
-              <input type="file" class="custom-file-input" (change)="uploadCover(f)" #coverUpload ngModel
-                     name="coverUrl" #coverUrl="ngModel" accept="image/x-png,image/gif,image/jpeg" required>
+              <input type="file" tabindex="-1" class="custom-file-input"
+                     (change)="uploadCover()"
+                     #coverUploa
+                     [(ngModel)]="form.coverUrl"
+                     accept="image/x-png,image/gif,image/jpeg">
               <span class="custom-file-control"></span>
             </label>
           </div>
@@ -68,16 +58,22 @@
           <div class="col-sm-6">
             <label>Upload the Cavedoc</label>
             <label class="custom-file">
-              <input type="file" class="custom-file-input" (change)="uploadDoc(f)" #caveDocUpload ngModel name="docUrl"
-                     #docUrl="ngModel" accept="application/pdf" required>
+              <input type="file" tabindex="-1" class="custom-file-input"
+                     (change)="uploadDoc()"
+                     #caveDocUpload
+                     [(ngModel)]="form.docUrl"
+                     accept="application/pdf" >
               <span class="custom-file-control"></span>
             </label>
           </div>
           <div class="col-sm-6">
             <label>Proof of Ownership</label>
             <label class="custom-file">
-              <input type="file" class="custom-file-input" (change)="uploadProof(f)" #proofUpload ngModel
-                     name="proofUrl" #proofUrl="ngModel" accept="application/pdf" required>
+              <input type="file" tabindex="-1" class="custom-file-input"
+                     (change)="uploadProof()"
+                     #proofUpload
+                     [(ngModel)]="form.proofUrl"
+                     accept="application/pdf" >
               <span class="custom-file-control"></span>
             </label>
           </div>
@@ -91,24 +87,24 @@
             <p>These are documents that I bought and paid for myself or that I have received explicit approval to resell
               them as my own from the original owner</p>
             <div class="label">
-              <input type="checkbox">
-              <span>Yes</span>
+              <input tabindex="-1" type="checkbox" required [(ngModel)]="form.tou">
+              Yes
             </div>
           </div>
         </div>
       </div>
     </div>
     </div>
-
     <div class="row">
       <div class="col-sm-12">
         <div class="cav-btn-group pull-right text-center">
-          <div (click)="cancelUpload()" class="cav-btn danger">Cancel</div>
-          <div (click)="previousStep(f)" class="cav-btn">Previous</div>
-          <div (click)="nextStep(f)" *ngIf="step < 4" class="cav-btn good">Next</div>
-          <div (click)="submitNewListing(f)" *ngIf="step === 4" [ngClass]="{'disabledd': !formReady}"
+          <div style="color:red" *ngIf="!f.form.valid">NOT VALID!</div>
+          <button type="button" (click)="cancelUpload()" class="cav-btn danger">Cancel</button>
+          <button type="button" (click)="previousStep(f)" class="cav-btn">Previous</button>
+          <button type="button" (click)="nextStep(f)" *ngIf="step < 4" class="cav-btn good">Next</button>
+          <button type="submit" (click)="submitNewListing(f)" *ngIf="step === 4" [disabled]="!f.form.valid"
                class="cav-btn good">Finish
-          </div>
+          </button>
         </div>
       </div>
     </div>

@@ -21,7 +21,6 @@ export class PropertyService {
 
   getProperty(id) {
     this.propertyDocument = this.afs.doc<Property>(`properties/${id}`);
-    console.log('what is property id?', id);
     return this.propertyDocument
   }
 
