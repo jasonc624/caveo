@@ -10,7 +10,7 @@
       <div id="basic_info">
         <div class="form-group">
           <label for="name">Name of Listing</label>
-          <input formControlName="name" type="text" class="form-control" required>
+          <input formControlName="name" type="text" class="form-control">
           <small class="form-text text-muted">Make it attractive by adding details such as "Mold check!" or "Asbestos
             free!"
           </small>
@@ -19,14 +19,14 @@
           <div class="row">
             <div class="col-sm-6">
               <label for="price">Set Price</label>
-              <input formControlName="price" type="number" class="form-control" required>
+              <input formControlName="price" type="number" class="form-control">
               <small class="form-text text-muted">The more recent your listing is the more you can earn. You can also list
                 it free.
               </small>
             </div>
             <div class="col-sm-6">
               <label for="type">Cavedoc Type</label>
-              <select formControlName="type" class="form-control" required>
+              <select formControlName="type" class="form-control">
                 <option value="appraisal">Appraisal</option>
                 <option value="inspection">Inspection</option>
                 <option value="other">Other</option>
@@ -40,12 +40,16 @@
         <div class="row">
           <div class="col-sm-12">
             <label>Upload Cover Image</label>
+            <div *ngIf="coverUrl.invalid && (coverUrl.dirty || coverUrl.touched)"
+                 class="alert alert-danger">
+              cover url invalid
+            </div>
             <label class="custom-file">
               <input type="file" tabindex="-1" class="custom-file-input"
-                     (change)="uploadCover()"
+                     (change)="uploadCover($event)"
                      #coverUpload
-                     formControlName="coverUrl"
                      accept="image/x-png,image/gif,image/jpeg">
+              <input type="hidden" name="fileHidden" formControlName="coverUrl"/>
               <span class="custom-file-control"></span>
             </label>
           </div>
@@ -61,8 +65,8 @@
               <input type="file" tabindex="-1" class="custom-file-input"
                      (change)="uploadDoc()"
                      #caveDocUpload
-                     formControlName="docUrl"
                      accept="application/pdf" >
+              <input type="hidden" name="fileHidden" formControlName="docUrl"/>
               <span class="custom-file-control"></span>
             </label>
           </div>
@@ -72,8 +76,8 @@
               <input type="file" tabindex="-1" class="custom-file-input"
                      (change)="uploadProof()"
                      #proofUpload
-                     formControlName="proofUrl"
                      accept="application/pdf" >
+              <input type="hidden" name="fileHidden" formControlName="proofUrl"/>
               <span class="custom-file-control"></span>
             </label>
           </div>

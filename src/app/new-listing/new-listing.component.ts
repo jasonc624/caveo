@@ -3,7 +3,8 @@ import * as firebase from "firebase";
 import {AuthService} from "../_services/auth.service";
 import {AngularFirestore} from "angularfire2/firestore";
 import {ModalService} from "../_services/modal.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {fileInputValidator} from "../_factories/validators.factory";
 
 @Component({
   selector: 'app-new-listing',
@@ -12,7 +13,6 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class NewListingComponent implements OnInit {
   step = 1;
-  formReady = false;
 
   @ViewChild('caveDocUpload') caveDoc: ElementRef;
   @ViewChild('coverUpload') cover: ElementRef;
@@ -30,13 +30,13 @@ export class NewListingComponent implements OnInit {
   caveDocCollection;
 
   listingForm = new FormGroup({
-    name: new FormControl,
-    price: new FormControl,
-    type: new FormControl,
-    coverUrl: new FormControl,
-    docUrl: new FormControl,
-    proofUrl: new FormControl,
-    tou: new FormControl(),
+    'name': new FormControl,
+    'price': new FormControl,
+    'type': new FormControl,
+    'coverUrl': new FormControl([Validators.required]),
+    'docUrl': new FormControl([Validators.required]),
+    'proofUrl': new FormControl([Validators.required]),
+    'tou': new FormControl(),
   });
 
   constructor(private Auth: AuthService,
@@ -65,13 +65,15 @@ export class NewListingComponent implements OnInit {
   }
 
   submitNewListing() {
-    Object.assign({state: 'complete'}, this.listingForm);
-    this.caveDocCollection.doc(this.listing.options.id).set(this.listingForm);
+    Object.assign({state: 'complete'}, this.listingForm.value);
+    this.caveDocCollection.doc(this.listing.options.id).set(this.listingForm.value);
+    console.log('the listing form value', this.listingForm.value);
     this.modalService.setStatus('closed');
   }
 
-  uploadCover() {
+  uploadCover($event) {
     const cover: any = this.cover.nativeElement;
+    console.log('what is the new cover?', cover);
     if (this.docsToUploadArr.length > 0){
       this.docsToUploadArr.forEach(item => {
         if(item.name == 'cover') {
@@ -80,9 +82,8 @@ export class NewListingComponent implements OnInit {
       });
     }
     this.storageRef.child(this.storageBucket + '/covers/' + cover.files[0].name).put(cover.files[0]).then((snapshot) => {
-      this.listingForm.patchValue({coverUrl:snapshot.downloadURL});
+      this.listingForm.controls['coverUrl'].setValue(snapshot.downloadURL);
       this.docsToUploadArr.push({name: 'cover', path: snapshot.metadata.fullPath});
-      console.log('docs to upload', this.docsToUploadArr);
     });
   }
 
@@ -96,9 +97,8 @@ export class NewListingComponent implements OnInit {
       });
     }
     this.storageRef.child(this.storageBucket + '/docs/' + doc.files[0].name).put(doc.files[0]).then((snapshot) => {
-      this.listingForm.patchValue({docUrl:snapshot.downloadURL});
+      this.listingForm.controls['docUrl'].setValue(snapshot.downloadURL);
       this.docsToUploadArr.push({name: 'doc', path: snapshot.metadata.fullPath});
-      console.log('docs to upload', this.docsToUploadArr);
     });
   }
 
@@ -112,9 +112,8 @@ export class NewListingComponent implements OnInit {
       });
     }
     this.storageRef.child(this.storageBucket + '/proof/' + proof.files[0].name).put(proof.files[0]).then((snapshot) => {
-      this.listingForm.patchValue({proofUrl:snapshot.downloadURL});
+      this.listingForm.controls['proofUrl'].setValue(snapshot.downloadURL);
       this.docsToUploadArr.push({name: 'proof', path: snapshot.metadata.fullPath});
-      console.log('docs to upload', this.docsToUploadArr);
     });
   }
 
@@ -128,7 +127,6 @@ export class NewListingComponent implements OnInit {
         .catch(err => console.log('err deleting files', err));
     });
     this.caveDocCollection.doc(this.listing.options.id).delete().then(res => {
-      console.log('successfully deleted the entry in db');
       this.modalService.setStatus('closed');
     });
   }
@@ -137,4 +135,6 @@ export class NewListingComponent implements OnInit {
     this.cancelUpload();
     this.modalService.setStatus('closed');
   }
+
+  get coverUrl() { return this.listingForm.get('coverUrl') }
 }
