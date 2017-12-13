@@ -4,6 +4,7 @@ import {Property} from "../_models/property.model";
 import {PropertyService} from "../_services/property.service";
 import {ActivatedRoute} from "@angular/router";
 import {ModalService} from "../_services/modal.service";
+import {AngularFirestore} from "angularfire2/firestore";
 
 @Component({
   selector: 'app-property-landing',
@@ -14,9 +15,13 @@ export class PropertyLandingComponent implements OnInit {
   sub;
   address:string;
   property:Observable<Property>;
+  propertyCollection;
+  cavedocCollection;
   constructor(private route: ActivatedRoute,
+              private afs:  AngularFirestore,
               private propertyService: PropertyService,
-              private modalService: ModalService) {}
+              private modalService: ModalService) {
+  }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -26,6 +31,11 @@ export class PropertyLandingComponent implements OnInit {
 
   }
   addDoc() {
+    this.propertyCollection = this.afs.doc('' + `properties/${this.address}`);
+    this.cavedocCollection = this.propertyCollection.collection('cavedoc');
+    this.cavedocCollection.doc().set({
+      uid: "testing mother fucker"
+    });
     this.modalService.setStatus('newListing', this.address);
   }
   editDoc() {

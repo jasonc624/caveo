@@ -90,7 +90,7 @@
       <div class="cav-btn-group pull-right text-center">
         <div (click)="cancelUpload()" class="cav-btn danger">Cancel</div>
         <div (click)="previousStep(f)" class="cav-btn">Previous</div>
-        <div (click)="nextStep(f)" *ngIf="step < 4"class="cav-btn good">Next</div>
+        <div (click)="nextStep(f)" *ngIf="step < 4" class="cav-btn good" [ngClass]="{'disabled': formReady }">Next</div>
         <div (click)="submitNewListing(f)" *ngIf="step === 4" class="cav-btn good">Finish</div>
       </div>
     </div>

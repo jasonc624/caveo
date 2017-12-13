@@ -9,6 +9,8 @@ import {AuthService} from "../_services/auth.service";
 })
 export class NewListingComponent implements OnInit {
   step = 1;
+  formReady = false;
+
   @ViewChild('caveDocUpload') caveDoc: ElementRef;
   @ViewChild('coverUpload') cover: ElementRef;
   @ViewChild('proofUpload') proof: ElementRef;
@@ -40,19 +42,24 @@ export class NewListingComponent implements OnInit {
   }
 
   submitNewListing(f) {
-    this.uploadDoc().then(res => {
-      this.uploadProof();
-      console.log('done with first promise');
-    });
-    this.uploadCover().then(res => {
-      console.log('done with second promise');
-      if (f.form.status === 'VALID'){
-        console.log('form valid',f);
-        f.value.coverUrl = this.coverFileUrl;
-        f.value.docUrl = this.cavedocFileUrl;
-        f.value.proofUrl = this.proofFileUrl;
-      }
-    })
+    console.log('submitting the form', f);
+    if (this.formReady) {
+
+    }
+
+    // this.uploadDoc().then(res => {
+    //   this.uploadProof();
+    //   console.log('done with first promise');
+    // });
+    // this.uploadCover().then(res => {
+    //   console.log('done with second promise');
+    //   if (f.form.status === 'VALID'){
+    //     console.log('form valid',f);
+    //     f.value.coverUrl = this.coverFileUrl;
+    //     f.value.docUrl = this.cavedocFileUrl;
+    //     f.value.proofUrl = this.proofFileUrl;
+    //   }
+    // })
   }
   uploadCover() {
     const promise = new Promise((resolve, reject) => {
@@ -77,6 +84,7 @@ export class NewListingComponent implements OnInit {
     });
     return promise;
   }
+
   uploadProof() {
     const promise = new Promise((resolve, reject)=> {
       const proof:any = this.proof.nativeElement;
@@ -88,6 +96,7 @@ export class NewListingComponent implements OnInit {
     });
     return promise
   }
+
   cancelUpload() {
     const storageRef = firebase.storage().ref();
     // storageRef.child(`${this.basePath}/${name}`).delete()
