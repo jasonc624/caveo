@@ -6,7 +6,6 @@ import * as firebase from 'firebase/app';
 import {Router} from "@angular/router";
 import {User} from "../_models/user.model";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Subject} from "rxjs/Subject";
 
 @Injectable()
 
@@ -18,6 +17,7 @@ export class AuthService {
   users: Observable<User>;
   usersCollection;
   isLoggedIn = new BehaviorSubject<any>('');
+
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.currentUser = afAuth.auth.currentUser;
@@ -94,6 +94,7 @@ export class AuthService {
   updateUserData(id, data) {
     this.usersDoc = this.afs.doc<User>(`users/${id}`);
     this.usersDoc.update(data);
+    console.log('the current user', this.currentUser);
   }
 
 }

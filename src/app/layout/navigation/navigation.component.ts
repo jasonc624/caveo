@@ -24,6 +24,7 @@ export class NavigationComponent implements OnInit {
   constructor(public router: Router, public auth: AuthService, private modalService: ModalService, private afs: AngularFirestore) {
     this.userDoc = afs.doc<User>('users/' + this.Uid);
     this.user = this.userDoc.valueChanges();
+    console.log('the user from firebase', this.user);
   }
 
   ngOnInit() {
@@ -53,7 +54,7 @@ export class NavigationComponent implements OnInit {
     const el:any = this.avatar.nativeElement;
     const storageRef = firebase.storage().ref();
     storageRef.child('avatars/' + el.files[0].name).put(el.files[0]).then( (snapshot) => {
-      this.auth.updateUserData(this.Uid,{avatar: snapshot.downloadURL});
+      this.auth.updateUserData(this.Uid,{photoURL: snapshot.downloadURL});
     });
 
   }

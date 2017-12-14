@@ -41,15 +41,13 @@ export class NewListingComponent implements OnInit {
 
   constructor(private Auth: AuthService,
               private modalService: ModalService,
-              private afs: AngularFirestore) {
-    console.log('init new listing modal');
-
-  }
+              private afs: AngularFirestore) {}
 
   ngOnInit() {
     this.User = this.Auth.isLoggedIn.getValue();
     this.caveDocCollection = this.afs.collection( 'properties/' + this.listing.options.addressId + '/cavedocs');
     this.storageBucket = 'cavedocs/' + this.listing.options.addressId + '/' + this.User.uid;
+    console.log('the user!!!', this.User);
   }
 
   nextStep() {

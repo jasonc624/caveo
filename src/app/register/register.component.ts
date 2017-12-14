@@ -12,8 +12,8 @@ export class RegisterComponent implements OnInit {
   public user = {
     email: '',
     password: '',
-    display_name:'',
-    full_name: '',
+    displayName:'',
+    fullName: '',
     city: '',
     state: '',
     zip: '',
