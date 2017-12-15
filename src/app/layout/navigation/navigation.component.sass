@@ -58,8 +58,13 @@ nav.sidebar
         &.active
           border-right: solid 1px lighten($app-primary, 30)
   @media (max-width: 768px)
+    position: fixed
+    left: 0
+    top: 0
     @include transition(all, .5s, ease)
     height: 50px
     overflow: hidden
+    width: 100%
+    z-index: 1
     &.open
       height: 415px
