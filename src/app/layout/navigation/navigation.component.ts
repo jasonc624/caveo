@@ -15,16 +15,18 @@ import {Observable} from "rxjs/Observable";
 })
 export class NavigationComponent implements OnInit {
   isLanding = false;
-  Uid = localStorage.getItem('uid');
   @ViewChild('avatarUpload') avatar: ElementRef;
-  @Output() purpose: EventEmitter<string> = new EventEmitter<string>();
-
-  private userDoc: AngularFirestoreDocument<User>;
-  user: Observable<User>;
+  User;
   constructor(public router: Router, public auth: AuthService, private modalService: ModalService, private afs: AngularFirestore) {
-    this.userDoc = afs.doc<User>('users/' + this.Uid);
-    this.user = this.userDoc.valueChanges();
-    console.log('the user from firebase', this.user);
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        this.User = user;
+      } else {
+        // No user is signed in.
+        this.User = null;
+      }
+    });
   }
 
   ngOnInit() {
@@ -41,7 +43,6 @@ export class NavigationComponent implements OnInit {
   }
 
   openUserModal(selected) {
-    console.log('openUserModal', selected);
     this.modalService.setStatus(selected);
   }
 
@@ -54,7 +55,7 @@ export class NavigationComponent implements OnInit {
     const el:any = this.avatar.nativeElement;
     const storageRef = firebase.storage().ref();
     storageRef.child('avatars/' + el.files[0].name).put(el.files[0]).then( (snapshot) => {
-      this.auth.updateUserData(this.Uid,{photoURL: snapshot.downloadURL});
+      this.auth.updateUserData(this.User.uid,{photoURL: snapshot.downloadURL});
     });
 
   }

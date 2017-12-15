@@ -18,6 +18,7 @@ export class AuthService {
   usersCollection;
   isLoggedIn = new BehaviorSubject<any>('');
 
+  User;
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
     this.currentUser = afAuth.auth.currentUser;
@@ -26,6 +27,9 @@ export class AuthService {
     firebase.auth().onAuthStateChanged((user) => {
         console.log('auth state changed', user);
         this.isLoggedIn.next(user);
+        if (user) {
+          this.User = firebase.auth().currentUser;
+        }
     });
   }
 
@@ -88,13 +92,16 @@ export class AuthService {
   // }
 
   writeUserData(user) {
+    //write to firebase db User
     this.usersCollection.doc(user.uid).set({uid: user.uid, email: user.email, phone: user.phoneNumber});
   }
 
   updateUserData(id, data) {
+    //write to firebase db User
     this.usersDoc = this.afs.doc<User>(`users/${id}`);
     this.usersDoc.update(data);
-    console.log('the current user', this.currentUser);
+    //write to firebase auth User
+    this.User.updateProfile(data);
   }
 
 }

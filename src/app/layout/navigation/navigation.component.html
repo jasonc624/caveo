@@ -1,12 +1,12 @@
 <nav *ngIf="isLanding" class="navbar navbar-default navbar-fixed-top" [ngClass]="{'splash-page': isLanding}">
   <div class="container">
-    <a class="navbar-brand" [routerLink]="['/']">CAVEO</a>
+    <a class="navbar-brand" [routerLink]="['']">CAVEO</a>
     <ul class="nav navbar-nav navbar-right">
-      <ng-container *ngIf="!auth.currentUser">
+      <ng-container *ngIf="!User">
         <li><a (click)="openUserModal('login')">Login</a></li>
         <li><a (click)="openUserModal('register')">Register</a></li>
       </ng-container>
-      <li *ngIf="auth.currentUser"><a (click)="logout()">Logout</a></li>
+      <li *ngIf="User"><a (click)="logout()">Logout</a></li>
     </ul>
   </div>
 </nav>
@@ -14,7 +14,7 @@
 <nav class="sidebar" *ngIf="!isLanding" >
   <div class="container-inner clearfix">
     <div class="navbar-brand">
-      <a [routerLink]="['/']">Caveo</a>
+      <a [routerLink]="['']">Caveo</a>
     </div>
     <div class="pull-right">
       <div class="navbar-brand">
@@ -25,10 +25,10 @@
       <div class="avatar">
         <input type="file" #avatarUpload (change)="uploadAvatar()">
         <div class="avatar-container">
-          <img [src]="(user | async)?.photoURL" alt="">
+          <img [src]="User?.photoURL" alt="">
         </div>
       </div>
-      <div class="user-name">{{(user | async)?.displayName}}</div>
+      <div class="user-name">{{User?.displayName}}</div>
       <div class="rating"></div>
       <div class="revenue"></div>
     </div>
