@@ -17,6 +17,8 @@ export class NavigationComponent implements OnInit {
   isLanding = false;
   @ViewChild('avatarUpload') avatar: ElementRef;
   User;
+
+  open = false;
   constructor(public router: Router, public auth: AuthService, private modalService: ModalService, private afs: AngularFirestore) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -58,5 +60,9 @@ export class NavigationComponent implements OnInit {
       this.auth.updateUserData(this.User.uid,{photoURL: snapshot.downloadURL});
     });
 
+  }
+
+  openMenu() {
+    this.open = !this.open;
   }
 }
