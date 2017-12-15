@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 import {Router} from "@angular/router";
 import {User} from "../_models/user.model";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {ModalService} from "./modal.service";
 
 @Injectable()
 
@@ -20,7 +21,10 @@ export class AuthService {
 
   User;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+  constructor(private afAuth: AngularFireAuth,
+              private afs: AngularFirestore,
+              private modalService: ModalService,
+              private router: Router) {
     this.currentUser = afAuth.auth.currentUser;
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
@@ -57,16 +61,16 @@ export class AuthService {
       });
   }
 
-  register(email, password, data?: object) {
-    console.log('reg', email, password);
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+  register(user) {
+    this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
       .then(res => {
-        console.log('success you registered', res);
         this.writeUserData(res);
-        this.updateUserData(res.uid, data);
+        this.updateUserData(res.uid, user);
+        this.modalService.setStatus('login');
       })
       .catch(err => {
         console.log('something went wrong while registering', err);
+        this.modalService.setStatus('closed');
         alert(err);
       });
   }
@@ -92,16 +96,24 @@ export class AuthService {
   // }
 
   writeUserData(user) {
+    console.log('writing user data ', user);
     //write to firebase db User
-    this.usersCollection.doc(user.uid).set({uid: user.uid, email: user.email, phone: user.phoneNumber});
+    this.usersCollection.doc(user.uid).set({
+        uid: user.uid,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        displayName: user.displayName,
+        fullName: null
+      });
   }
 
   updateUserData(id, data) {
+    console.log('updating user data ', data);
     //write to firebase db User
     this.usersDoc = this.afs.doc<User>(`users/${id}`);
     this.usersDoc.update(data);
     //write to firebase auth User
-    this.User.updateProfile(data);
+    this.User.updateProfile(data).then(res => console.log('update successfull')).catch(err => console.log('update failed', err));
   }
 
 }

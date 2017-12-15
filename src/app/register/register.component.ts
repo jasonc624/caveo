@@ -14,20 +14,18 @@ export class RegisterComponent implements OnInit {
     password: '',
     displayName:'',
     fullName: '',
+    phoneNumber:'',
     city: '',
     state: '',
-    zip: '',
-    avatar:'',
-    phone:''
+    zip: ''
   };
   constructor(private auth: AuthService,
               private modalService: ModalService) { }
   ngOnInit() {
   }
   register(user) {
-    this.auth.register(user.email, user.password, this.user);
-    this.modalService.setStatus('closed');
-    this.modalService.setStatus('login');
+    console.log('nani??', user);
+    this.auth.register(user);
   }
   closeModal() {
     this.modalService.setStatus('closed');
