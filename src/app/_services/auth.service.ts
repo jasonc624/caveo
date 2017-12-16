@@ -42,8 +42,6 @@ export class AuthService {
     console.log('login creds', email, password);
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        console.log('success you logged in!', res);
-        localStorage.setItem('uid', res.uid);
         this.router.navigate(['app']);
       })
       .catch(err => {
@@ -96,7 +94,6 @@ export class AuthService {
   // }
 
   writeUserData(user) {
-    console.log('writing user data ', user);
     //write to firebase db User
     this.usersCollection.doc(user.uid).set({
         uid: user.uid,
@@ -108,7 +105,6 @@ export class AuthService {
   }
 
   updateUserData(id, data) {
-    console.log('updating user data ', data);
     //write to firebase db User
     this.usersDoc = this.afs.doc<User>(`users/${id}`);
     this.usersDoc.update(data);

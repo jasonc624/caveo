@@ -1,12 +1,13 @@
 <div class="col-sm-3">
   <div class="listing-card">
-    <div class="cover-image">
+    <div class="cover-image" [ngStyle]="{'background-image': 'url('+ listing.coverUrl +')'}">
       <div class="meta">
         <div class="user-avatar">
-
+          <img [src]="(user | async)?.photoURL" alt="">
         </div>
-        <h5 class="title">name:</h5> {{listing?.name}}
-        <h5 class="price">price:</h5> {{listing?.price}}
+        <h5 class="title">{{listing?.name}}</h5>
+        <h5 class="price">${{listing?.price}}</h5>
+        <h5 class="type">{{listing?.type}}</h5>
       </div>
     </div>
   </div>

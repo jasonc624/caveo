@@ -13,9 +13,7 @@ admin.initializeApp(functions.config().firebase);
 // Add headers
 
 exports.places = functions.https.onRequest((request, response) => {
-  // response.header('Content-Type','application/json');
   response.header('Access-Control-Allow-Origin', '*');
-  // response.header('Access-Control-Allow-Headers', 'Content-Type');
   const url = api + '?query=' + request.query.address + '&key=' + placesApiKey;
   let body = '';
   https.get(url, res => {

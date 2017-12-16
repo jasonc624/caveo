@@ -8,12 +8,21 @@
   <form [formGroup]="listingForm" class="newlisting-form" novalidate>
     <div class="step-container" [ngClass]="{'step-2': step == 2, 'step-3': step == 3, 'step-4': step == 4}">
       <div id="basic_info">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>Basics</h3>
+          </div>
+        </div>
         <div class="form-group">
-          <label for="name">Name of Listing</label>
-          <input formControlName="name" type="text" class="form-control">
-          <small class="form-text text-muted">Make it attractive by adding details such as "Mold check!" or "Asbestos
-            free!"
-          </small>
+          <div class="row">
+            <div class="col-sm-12">
+              <label for="name">Name of Listing</label>
+              <input formControlName="name" type="text" class="form-control">
+              <small class="form-text text-muted">Make it attractive by adding details such as "Mold check!" or "Asbestos
+                free!"
+              </small>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <div class="row">
@@ -38,20 +47,18 @@
     --><div id="cover">
       <div class="form-group">
         <div class="row">
-          <div class="col-sm-12">
-            <label>Upload Cover Image</label>
-            <div *ngIf="coverUrl.invalid && (coverUrl.dirty || coverUrl.touched)"
-                 class="alert alert-danger">
-              cover url invalid
-            </div>
-            <label class="custom-file">
-              <input type="file" tabindex="-1" class="custom-file-input"
-                     (change)="uploadCover($event)"
-                     #coverUpload
-                     accept="image/x-png,image/gif,image/jpeg">
-              <input type="hidden" name="fileHidden" formControlName="coverUrl"/>
-              <span class="custom-file-control"></span>
+          <div class="col-xs-12">
+            <h3>Details</h3>
+          </div>
+          <div class="col-sm-6">
+            <label>When was this document published?</label>
+            <input type="text">
+          </div>
+          <div class="col-sm-6">
+            <label>
+              This Cavedoc features:
             </label>
+            <input type="text">
           </div>
         </div>
       </div>
@@ -59,26 +66,46 @@
     --><div id="document">
       <div class="form-group">
         <div class="row">
-          <div class="col-sm-6">
-            <label>Upload the Cavedoc</label>
+          <div class="col-sm-12">
+            <h3>Upload</h3>
+          </div>
+          <div class="col-sm-4 text-center">
+            <label>Cover Image</label>
+            <div *ngIf="coverUrl.invalid && (coverUrl.dirty || coverUrl.touched)"
+                 class="alert alert-danger">
+              cover url invalid
+            </div>
+            <div class="custom-file">
+              <input type="file" id="cover-input"
+                     tabindex="-1"
+                     class="custom-file-input"
+                     (change)="uploadCover($event)"
+                     #coverUpload
+                     accept="image/x-png,image/gif,image/jpeg">
+              <input type="hidden" name="fileHidden" formControlName="coverUrl"/>
+              <label for="cover-input" class="custom-file-label"><i class="fa fa-icon fa-upload"></i> Select File</label>
+            </div>
+          </div>
+          <div class="col-sm-4 text-center">
+            <label>Cavedoc</label>
             <label class="custom-file">
-              <input type="file" tabindex="-1" class="custom-file-input"
+              <input type="file" id="doc-input" tabindex="-1" class="custom-file-input"
                      (change)="uploadDoc()"
                      #caveDocUpload
                      accept="application/pdf" >
               <input type="hidden" name="fileHidden" formControlName="docUrl"/>
-              <span class="custom-file-control"></span>
+              <label for="doc-input" class="custom-file-label"><i class="fa fa-icon fa-upload"></i> Select File</label>
             </label>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-4 text-center">
             <label>Proof of Ownership</label>
             <label class="custom-file">
-              <input type="file" tabindex="-1" class="custom-file-input"
+              <input id="proof-input" type="file" tabindex="-1" class="custom-file-input"
                      (change)="uploadProof()"
                      #proofUpload
                      accept="application/pdf" >
               <input type="hidden" name="fileHidden" formControlName="proofUrl"/>
-              <span class="custom-file-control"></span>
+              <label for="proof-input" class="custom-file-label"><i class="fa fa-icon fa-upload"></i> Select File</label>
             </label>
           </div>
         </div>

@@ -51,6 +51,7 @@ export class NewListingComponent implements OnInit {
   }
 
   nextStep() {
+    console.log('isloggedin', this.User);
     if (this.step < 4) {
       this.step++;
     }
@@ -63,9 +64,9 @@ export class NewListingComponent implements OnInit {
   }
 
   submitNewListing() {
-    Object.assign({state: 'complete'}, this.listingForm.value);
-    this.caveDocCollection.doc(this.listing.options.id).set(this.listingForm.value);
-    console.log('the listing form value', this.listingForm.value);
+    const form = Object.assign( this.listingForm.value, {user: this.User.uid});
+    this.caveDocCollection.doc(this.listing.options.id).set(form);
+    console.log('the listing form value',form);
     this.modalService.setStatus('closed');
   }
 

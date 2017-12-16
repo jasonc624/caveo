@@ -1,4 +1,21 @@
 @import '../../mixins'
+@import '../../variables'
+.custom-file
+  .custom-file-input
+    width: 0.1px
+    height: 0.1px
+    opacity: 0
+    overflow: hidden
+    position: absolute
+    z-index: -1
+  .custom-file-label
+    font-size: 1.25em
+    font-weight: 700
+    color: white
+    display: inline-block
+    background: $app-secondary
+    padding: 10px
+
 .modal-title
   display: inline-block
 .newlisting-form
@@ -15,6 +32,8 @@
       left: -1704px
     >div
       width: 568px
+      height: 264px
+      overflow: hidden
       display: inline-block
 .doc-options
   display: block

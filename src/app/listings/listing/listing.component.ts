@@ -1,4 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {User} from "../../_models/user.model";
+import {AngularFirestore} from "angularfire2/firestore";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-listing',
@@ -7,12 +10,13 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ListingComponent implements OnInit {
   @Input('listing') listing;
-  constructor() {
-    console.log('the listing component', this.listing);
+  user: Observable<any>;
+  constructor(private afs: AngularFirestore) {
   }
 
   ngOnInit() {
-
+    console.log('the listing', this.listing);
+    this.user = this.afs.doc<User>(`users/${this.listing.user}`).valueChanges();
   }
 
 }
