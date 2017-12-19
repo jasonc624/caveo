@@ -1,7 +1,7 @@
 <div class="listing-container">
   <ng-container>
     <div *ngFor="let listing of listings | async">
-      <app-listing [listing]="listing"></app-listing>
+      <app-listing [property]="address" [listing]="listing"></app-listing>
     </div>
   </ng-container>
 </div>

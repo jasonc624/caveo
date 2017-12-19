@@ -31,6 +31,8 @@ import { PropertyLandingComponent } from './property-landing/property-landing.co
 import { NewListingComponent } from './new-listing/new-listing.component';
 import { NewListingModule } from "./new-listing/new-listing.module";
 import { ListingComponent } from './listings/listing/listing.component';
+import { ListingLandingComponent } from './listing-landing/listing-landing.component';
+import { ListingService } from "./_services/listing.service";
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { ListingComponent } from './listings/listing/listing.component';
     SearchComponent,
     ProfileComponent,
     PropertyLandingComponent,
-    ListingComponent
+    ListingComponent,
+    ListingLandingComponent
   ],
   exports: [LoginComponent, RegisterComponent, NewListingComponent],
   imports: [
@@ -61,7 +64,7 @@ import { ListingComponent } from './listings/listing/listing.component';
     RegisterModule,
     NewListingModule,
   ],
-  providers: [ModalService, PropertyService, AuthService, AuthGuard],
+  providers: [ModalService, PropertyService, AuthService, AuthGuard, ListingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -58,7 +58,6 @@ export class NavigationComponent implements OnInit {
 
   openMenu() {
     this.open = !this.open;
-    console.log('openMenu', this.open);
     this.change.emit(this.open);
   }
 }

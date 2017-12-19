@@ -10,12 +10,13 @@ import {Observable} from "rxjs/Observable";
 })
 export class ListingComponent implements OnInit {
   @Input('listing') listing;
+  @Input('property') address;
   user: Observable<any>;
   constructor(private afs: AngularFirestore) {
   }
 
   ngOnInit() {
-    console.log('the listing', this.listing);
+    console.log('the property id', this.address);
     this.user = this.afs.doc<User>(`users/${this.listing.user}`).valueChanges();
   }
 

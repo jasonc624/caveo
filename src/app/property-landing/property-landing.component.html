@@ -7,9 +7,6 @@
       <div class="add pull-right">
         <div (click)="addDoc() " class="cav-btn">Upload</div>
       </div>
-      <!--<div class="edit pull-right">-->
-        <!--<button (click)="editDoc()" class="cav-btn">Edit</button>-->
-      <!--</div>-->
     </div>
   </div>
   <div class="property-pov" [ngStyle]=" {'background-image' : 'url(' + (property | async)?.property_image + ')' }">
@@ -17,3 +14,5 @@
 </div>
 
 <ng-listings></ng-listings>
+
+<router-outlet></router-outlet>

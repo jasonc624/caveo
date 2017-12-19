@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit {
       }
       this.suggestionsOpen = false;
       this.searchVal = place.formatted_address;
-      this.router.navigate(['app','search', place.place_id]);
+      this.router.navigate(['app','property', place.place_id]);
     });
   }
 }

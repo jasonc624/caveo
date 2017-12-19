@@ -47,11 +47,9 @@ export class NewListingComponent implements OnInit {
     this.User = this.Auth.isLoggedIn.getValue();
     this.caveDocCollection = this.afs.collection( 'properties/' + this.listing.options.addressId + '/cavedocs');
     this.storageBucket = 'cavedocs/' + this.listing.options.addressId + '/' + this.User.uid;
-    console.log('the user!!!', this.User);
   }
 
   nextStep() {
-    console.log('isloggedin', this.User);
     if (this.step < 4) {
       this.step++;
     }
@@ -64,15 +62,16 @@ export class NewListingComponent implements OnInit {
   }
 
   submitNewListing() {
-    const form = Object.assign( this.listingForm.value, {user: this.User.uid});
-    this.caveDocCollection.doc(this.listing.options.id).set(form);
+    let form = Object.assign( this.listingForm.value, {user: this.User.uid});
+    form = Object.assign( form, {id: this.listing.options.id});
+    console.log('append the id', form);
+    this.caveDocCollection.doc(form.id).set(form);
     console.log('the listing form value',form);
     this.modalService.setStatus('closed');
   }
 
   uploadCover($event) {
     const cover: any = this.cover.nativeElement;
-    console.log('what is the new cover?', cover);
     if (this.docsToUploadArr.length > 0){
       this.docsToUploadArr.forEach(item => {
         if(item.name == 'cover') {

@@ -1,6 +1,6 @@
 <div class="col-sm-3">
-  <div class="listing-card">
-    <div class="cover-image" [ngStyle]="{'background-image': 'url('+ listing.coverUrl +')'}">
+  <div class="listing-card" >
+    <div class="cover-image" [routerLink]="['/','app','property', address,'listing', listing.id]" [ngStyle]="{'background-image': 'url('+ listing.coverUrl +')'}">
       <div class="meta">
         <div class="user-avatar">
           <img [src]="(user | async)?.photoURL" alt="">

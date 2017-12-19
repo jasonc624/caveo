@@ -6,13 +6,20 @@
   height: 250px
   overflow: hidden
   .cover-image
+    margin-bottom: 10px
+    @include transition(all, .5s, ease)
+    cursor: pointer
     position: absolute
     left: 0
     top: 0
-    background-size: cover
+    background-size: 200%
+    background-position: center center
     background-repeat: no-repeat
     width: 100%
     height: 250px
+    &:hover
+      @include transition(all, .5s, ease)
+      background-size: 150%
     .meta
       width: 100%
       position: absolute
