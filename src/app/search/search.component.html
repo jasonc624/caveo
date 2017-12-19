@@ -1,16 +1,18 @@
-<div class="search-container clearfix">
-  <input type="text" (click)="filters()" placeholder="Search a property" (ngModelChange)="queryAddresses($event)" [ngModel]="searchVal" class="search-bar">
-  <ng-container *ngIf="suggestionsOpen">
-    <ul class="suggestions">
-      <ng-container  *ngIf="addrMatch">
-        <li *ngFor="let match of addrMatch">
-          <a (click)="searchAddress(match)">{{match.formatted_address}}</a>
-        </li>
-      </ng-container>
-      <li *ngIf="addrMatch == false"> <h5>Address does not exist please be more specific.</h5></li>
-    </ul>
-  </ng-container>
-  <div class="pull-right">
-    <span>v0.016 -alpha</span>
+<div class="search-container clearfix" [ngClass]="{'col-sm-10': open, 'col-sm-11': !open }">
+    <input type="text" (click)="filters()" placeholder="Search a property" (ngModelChange)="queryAddresses($event)"
+           [ngModel]="searchVal" class="search-bar">
+    <ng-container *ngIf="suggestionsOpen">
+      <ul class="suggestions">
+        <ng-container *ngIf="addrMatch">
+          <li *ngFor="let match of addrMatch">
+            <a (click)="searchAddress(match)">{{match.formatted_address}}</a>
+          </li>
+        </ng-container>
+        <li *ngIf="addrMatch == false"><h5>Address does not exist please be more specific.</h5></li>
+      </ul>
+    </ng-container>
+    <div class="pull-right">
+      <span>v0.016 -alpha</span>
+    </div>
   </div>
-</div>
+

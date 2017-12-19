@@ -11,13 +11,27 @@
 
 .navbar-brand a
   color: #fff
+.menu-toggle
+  height: 30px
+  width: 30px
+  top: 10px
+  @include borderRadius(50%)
+  position: absolute
+  right: -10px
+  padding: 5px
+  background: darken($app-primary, 5)
+  @include rotate3d(0, 1, 0, 0deg)
 nav.sidebar
-  @include transition(all, .5s, ease)
+  @include transition(all, .2s, ease)
   background: $app-primary
   height: 100vh
+  .logo
+    position: relative
+    z-index: 2
   .user-info
+    overflow: hidden
     background: darken($app-primary, 20)
-    height: 200px
+    height: auto
     float: left
     width: 100%
     color: lighten($app-primary, 20)
@@ -26,8 +40,8 @@ nav.sidebar
       text-align: center
       .avatar-container
         margin: 0 auto
-        width: 100px
-        height: 100px
+        width: 40px
+        height: 40px
         overflow: hidden
         border-radius: 50%
         border: 1px solid #fff
@@ -52,19 +66,68 @@ nav.sidebar
       padding: 15px
       display: block
       border-bottom: 1px solid lighten($app-primary, 10)
+      span
+        display: block
+        color: #fff
       a
+        display: none
         color: lighten($app-primary, 50)
         text-decoration: none
         &.active
           border-right: solid 1px lighten($app-primary, 30)
+  #logout
+    position: absolute
+    bottom: 0
+    left: 0
+    background: #000000
+    width: 100%
+    padding: 15px
+    color: #ffffff
+    text-align: center
+    cursor: pointer
+    background: darken($app-primary, 20)
+    a
+      color: #fff
+      text-decoration: none
+      display: none
+    @media (max-width: 768px)
+      position: relative
+      float: left
+      text-align: center
+  &.open
+    .nav-links
+      li a
+        display: block
+    #logout
+      text-align: right
+      a
+        display: inline-block
+    .user-info
+      .avatar .avatar-container
+        width: 100px
+        height: 100px
+    .menu-toggle
+      @include transition(all, .2s, ease)
+      @include rotate3d(0, 1, 0, 180deg)
   @media (max-width: 768px)
     position: fixed
     left: 0
     top: 0
-    @include transition(all, .5s, ease)
     height: 50px
     overflow: hidden
     width: 100%
     z-index: 1
+    @include transition(all, .5s, ease)
+    .user-info
+     .avatar .avatar-container
+        width: 60px
+        height: 60px
+    .nav-links
+      li a
+        display: block
     &.open
-      height: 415px
+      height: 474px
+      .user-info
+        .avatar .avatar-container
+          width: 60px
+          height: 60px

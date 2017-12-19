@@ -1,12 +1,10 @@
+@import '../mixins'
 .app-container
+  >*
+    @include transition(all, .2s, ease)
   @media(max-width: 768px)
     padding-top: 50px
 .page-container
   margin-top: 10px
   &.splash-page
     margin-top: 0
-
-.lp0
-  padding-left: 0px!important
-.rp0
-  padding-right: 0px!important

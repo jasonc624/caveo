@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ModalService} from "../_services/modal.service";
 
 @Component({
   selector: 'ng-app-splash',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SplashComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
 
   ngOnInit() {
   }
 
+  openUserModal(selected) {
+    this.modalService.setStatus(selected);
+  }
 }

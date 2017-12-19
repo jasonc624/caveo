@@ -1,7 +1,9 @@
-<div class="row app-container">
-  <ng-navigation [ngClass]="{'col-sm-2 rp0 lp0': !isLanding }"></ng-navigation>
-  <app-search *ngIf="!isLanding" class="col-sm-10 lp0 rp0"></app-search>
-  <div [ngClass]="{'splash-page': isLanding, 'col-sm-10': !isLanding}">
+<div class="row" [ngClass]="{'app-container': !isLanding}">
+  <ng-navigation (change)="menuState($event)" [landing]="isLanding" ></ng-navigation><!--
+
+  --><app-search *ngIf="!isLanding" [landing]="isLanding" [open]="sidebarOpen"></app-search><!--
+
+  --><div [ngClass]="{'splash-page': isLanding, 'col-sm-10': !isLanding && sidebarOpen, 'col-sm-11': !isLanding && !sidebarOpen}">
     <router-outlet></router-outlet>
   </div>
 

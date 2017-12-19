@@ -4,45 +4,60 @@
     <ul class="nav navbar-nav navbar-right pointer">
       <ng-container *ngIf="!User">
         <li><a (click)="openUserModal('login')">Login</a></li>
-        <li><a (click)="openUserModal('register')">Register</a></li>
       </ng-container>
       <li *ngIf="User"><a (click)="logout()">Logout</a></li>
     </ul>
   </div>
 </nav>
-
-<nav class="sidebar" [ngClass]="{'open': open}" *ngIf="!isLanding">
-  <div class="container-inner clearfix">
-    <div class="navbar-brand">
-      <a [routerLink]="['']">CAVEō</a>
-    </div>
-    <div class="pull-right">
-      <div class="navbar-brand visible-xs">
-        <i (click)="openMenu()" class="fa fa-icon fa-bars"></i>
-      </div>
-      <div class="navbar-brand hidden-xs">
-        <a> <i (click)="openMenu()" class="fa fa-icon fa-chevron-left"></i> </a>
-      </div>
-    </div>
-    <div class="user-info text-center">
-      <div class="avatar">
-        <input class="hidden-xs" type="file" #avatarUpload (change)="uploadAvatar()">
-        <div class="avatar-container">
-          <img [src]="User?.photoURL" alt="">
+<ng-container *ngIf="!isLanding">
+  <nav [ngClass]="{'col-sm-1': !open, 'open col-sm-2': open }" class="sidebar rp0 lp0">
+    <div class="container-inner clearfix">
+      <div class="logo">
+        <div class="navbar-brand">
+          <a [routerLink]="['']">CAVEō</a>
+        </div>
+        <div class="pull-right">
+          <div (click)="openMenu()" class="navbar-brand visible-xs">
+            <i class="fa fa-icon fa-bars"></i>
+          </div>
+          <div (click)="openMenu()" class="navbar-brand menu-toggle hidden-xs pointer">
+            <a> <i class="fa fa-icon fa-chevron-left"></i> </a>
+          </div>
         </div>
       </div>
-      <div class="user-name">{{User?.displayName}}</div>
-      <div class="rating"></div>
-      <div class="revenue"></div>
+      <div class="user-info text-center">
+        <div class="avatar">
+          <!--<input class="hidden-xs" type="file" #avatarUpload (change)="uploadAvatar()">-->
+          <div class="avatar-container">
+            <img [src]="User?.photoURL" alt="">
+          </div>
+        </div>
+        <div class="user-name">{{User?.displayName}}</div>
+        <div class="rating"></div>
+        <div class="revenue"></div>
+      </div>
+      <ul class="pull-left nav-links">
+        <li [routerLink]="['app','profile']">
+          <span><i class="fa fa-icon fa-envelope"></i></span>
+          <a href="">Inbox</a>
+        </li>
+        <li [routerLink]="['app','profile']">
+          <span><i class="fa fa-icon fa-heart"></i></span>
+          <a href="">Favorites</a>
+        </li>
+        <li [routerLink]="['app','profile']">
+          <span><i class="fa fa-icon fa-user"></i></span>
+          <a>Profile</a>
+        </li>
+        <li [routerLink]="['app','profile']">
+          <span><i class="fa fa-icon fa-question-circle"></i></span>
+          <a href="">Help</a>
+        </li>
+      </ul>
+      <div (click)="logout()" id="logout">
+        <a>Logout</a> <span><i class="fa fa-icon fa-sign-out"></i></span>
+      </div>
+      <!--<i class="fa fa-icon fa-sign-off" ></i>-->
     </div>
-    <ul class="pull-left nav-links">
-      <li><a href="">Inbox</a></li>
-      <li><a href="">Favorites</a></li>
-      <li><a [routerLink]="['app','profile']">Profile</a></li>
-      <li><a href="">Help</a></li>
-      <li><a (click)="logout()">Logout</a></li>
-    </ul>
-
-    <!--<i class="fa fa-icon fa-sign-off" ></i>-->
-  </div>
-</nav>
+  </nav>
+</ng-container>

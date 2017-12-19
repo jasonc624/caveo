@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {ModalService} from "../../_services/modal.service";
 import {AuthService} from "../../_services/auth.service";
@@ -14,11 +14,14 @@ import {Observable} from "rxjs/Observable";
   styleUrls: ['./navigation.component.sass']
 })
 export class NavigationComponent implements OnInit {
-  isLanding = false;
   @ViewChild('avatarUpload') avatar: ElementRef;
   User;
 
-  open = false;
+  @Input('landing') isLanding;
+
+  @Output() change: EventEmitter<any> = new EventEmitter<any>();
+
+  open = true;
   constructor(public router: Router, public auth: AuthService, private modalService: ModalService, private afs: AngularFirestore) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -32,16 +35,7 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const route = event.url.slice(1);
-        if (route === 'landing') {
-          this.isLanding = true;
-        } else {
-          this.isLanding = false;
-        }
-      }
-    });
+    this.change.emit(this.open);
   }
 
   openUserModal(selected) {
@@ -64,5 +58,7 @@ export class NavigationComponent implements OnInit {
 
   openMenu() {
     this.open = !this.open;
+    console.log('openMenu', this.open);
+    this.change.emit(this.open);
   }
 }

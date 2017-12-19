@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
@@ -14,6 +14,10 @@ export class SearchComponent implements OnInit {
   timer = null;
   addrMatch;
   suggestionsOpen;
+
+  @Input('landing') isLanding;
+
+  @Input() open;
   constructor(private http: HttpClient,
               private propertyService: PropertyService,
               private router: Router) {
@@ -24,6 +28,7 @@ export class SearchComponent implements OnInit {
   filters() {
 
   }
+
   queryAddresses(val) {
     clearTimeout(this.timer);
     this.suggestionsOpen = true;

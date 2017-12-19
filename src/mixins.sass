@@ -16,3 +16,9 @@
   -webkit-border-radius: $amount
   -moz-border-radius: $amount
   border-radius: $amount
+@mixin rotate3d($x,$y,$z, $amount)
+  -webkit-transform: rotate3d($x, $y, $z, $amount)
+  -moz-transform: rotate3d($x, $y, $z, $amount)
+  -ms-transform: rotate3d($x, $y, $z, $amount)
+  -o-transform: rotate3d($x, $y, $z, $amount)
+  transform: rotate3d($x, $y, $z, $amount)

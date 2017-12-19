@@ -10,6 +10,9 @@ import {ModalService} from './_services/modal.service';
 export class AppComponent {
   isLanding = false;
   showModal = 'closed';
+
+  sidebarOpen;
+
   constructor(public router: Router, public modalService: ModalService) {
     this.modalService.modalStatus.subscribe(res => {
       console.log('appcomponent', res);
@@ -25,6 +28,12 @@ export class AppComponent {
         }
       }
     });
+  }
+
+  menuState(evt) {
+    console.log('menuState', evt);
+    this.sidebarOpen = evt;
+    console.log('is it open?', this.sidebarOpen)
   }
 }
 
